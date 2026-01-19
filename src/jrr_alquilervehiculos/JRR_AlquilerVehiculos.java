@@ -4,11 +4,15 @@
  */
 package jrr_alquilervehiculos;
 
+import utiles.ES;
+
 /**
  *
  * @author dam1
  */
 public class JRR_AlquilerVehiculos {
+
+    final private int   MAX_ALQUILERES = 0;
 
     /**
      * @param args the command line arguments
