@@ -27,7 +27,8 @@ public class Cliente {
         this.localidad = c.localidad;
         this.codigoPostal = c.codigoPostal;
     }
-
+ 
+       
     public String getDni() {
         return dni;
     }
