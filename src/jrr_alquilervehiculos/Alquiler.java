@@ -4,18 +4,18 @@
  */
 package jrr_alquilervehiculos;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
  * @author dam1
  */
 public class Alquiler {
-   final private SimpleDateFormat FORMATO_FECHA = null;
+   final private DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyy HH:mm:ss");
     final private double    PRECIO_DIA = 0;
+private   LocalDateTime fecha;
     final int MILISEGUNDOS_DIA = 0;
-    private Date fecha;
     private int dias;
     private Vehiculo turismo;
     private  Cliente cliente;
@@ -25,7 +25,7 @@ public class Alquiler {
         this.cliente = cliente;
     }
 
-    public Date getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
       
     }
