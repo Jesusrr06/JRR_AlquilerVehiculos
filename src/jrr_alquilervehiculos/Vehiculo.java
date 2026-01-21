@@ -52,11 +52,11 @@ public class Vehiculo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Vehiculo{");
-        sb.append("matricula=").append(matricula);
-        sb.append(", marca=").append(marca);
-        sb.append(", modelo=").append(modelo);
-        sb.append(", cilindrada=").append(cilindrada);
-        sb.append(", disponible=").append(disponible);
+        sb.append("matricula= ").append(matricula);
+        sb.append(", marca= ").append(marca);
+        sb.append(", modelo= ").append(modelo);
+        sb.append(", cilindrada= ").append(cilindrada);
+        sb.append(", disponible= ").append(disponible);
         sb.append('}');
         return sb.toString();
     }

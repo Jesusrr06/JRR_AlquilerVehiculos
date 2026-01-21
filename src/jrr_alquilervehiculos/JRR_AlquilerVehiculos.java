@@ -12,13 +12,15 @@ import utiles.ES;
  */
 public class JRR_AlquilerVehiculos {
 
-    final private int   MAX_ALQUILERES = 0;
-
+    final private int   MAX_ALQUILERES = 20;
+    private int MAX_CLIENTES=  10;
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
 
+        
         
     }
     

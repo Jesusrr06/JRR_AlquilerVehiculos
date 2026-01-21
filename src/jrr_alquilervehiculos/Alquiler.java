@@ -49,13 +49,20 @@ public class Alquiler {
 
     public double precioAlquiler() {
 
-        return (double) PRECIO_DIA  + this.turismo.getCilindrada() / 100;
+        return (double) PRECIO_DIA * this.dias + this.turismo.getCilindrada() / 100;
     }
 
-    private int diferenciaDias(Date dia) {
-        
-        return (int)  ChronoUnit.DAYS.between(this.fecha, (Temporal) dia) ;
+    private int diferenciaDias(LocalDateTime fecha1) {
+        LocalDateTime l = LocalDateTime.now();
+        return (int) ChronoUnit.DAYS.between(fecha1, l);
 
+    }
+
+    public void cerrar() 
+    {
+        this.getTurismo().setDisponible(true);
+
+        this.dias = diferenciaDias(this.fecha) + 1;
     }
 
     @Override
