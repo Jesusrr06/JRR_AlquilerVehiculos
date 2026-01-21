@@ -44,7 +44,10 @@ public class Vehiculo {
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
     }
-
+      public boolean isDisponible(boolean d) {
+          return d;
+      }
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

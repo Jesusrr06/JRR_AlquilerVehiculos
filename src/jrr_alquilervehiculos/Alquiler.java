@@ -6,41 +6,56 @@ package jrr_alquilervehiculos;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAmount;
+import java.util.Date;
 
 /**
  *
  * @author dam1
  */
 public class Alquiler {
-   final private DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyy HH:mm:ss");
-    final private double    PRECIO_DIA = 0;
-private   LocalDateTime fecha;
-    final int MILISEGUNDOS_DIA = 0;
+
+    final private DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+    final private double PRECIO_DIA = 30;
+    private LocalDateTime fecha;
     private int dias;
     private Vehiculo turismo;
-    private  Cliente cliente;
+    private Cliente cliente;
 
     public Alquiler(Vehiculo turismo, Cliente cliente) {
         this.turismo = turismo;
         this.cliente = cliente;
     }
 
-    public LocalDateTime getFecha() {
-        return fecha;
-      
-    }
-
-   
-    public int getDias() {
-        return dias;
+    public Cliente getCliente() {
+        return cliente;
     }
 
     public Vehiculo getTurismo() {
         return turismo;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public LocalDateTime getFecha() {
+        return fecha;
+
+    }
+
+    public int getDias() {
+        return dias;
+    }
+
+    public double precioAlquiler() {
+
+        return (double) PRECIO_DIA  + this.turismo.getCilindrada() / 100;
+    }
+
+    private int diferenciaDias(Date dia) {
+        
+        return (int)  ChronoUnit.DAYS.between(this.fecha, (Temporal) dia) ;
+
     }
 
     @Override
@@ -49,7 +64,6 @@ private   LocalDateTime fecha;
         sb.append("Alquiler{");
         sb.append("FORMATO_FECHA=").append(FORMATO_FECHA);
         sb.append(", PRECIO_DIA=").append(PRECIO_DIA);
-        sb.append(", MILISEGUNDOS_DIA=").append(MILISEGUNDOS_DIA);
         sb.append(", fecha=").append(fecha);
         sb.append(", dias=").append(dias);
         sb.append(", turismo=").append(turismo);
@@ -57,10 +71,5 @@ private   LocalDateTime fecha;
         sb.append('}');
         return sb.toString();
     }
-
-    
-    
- 
-
 
 }
