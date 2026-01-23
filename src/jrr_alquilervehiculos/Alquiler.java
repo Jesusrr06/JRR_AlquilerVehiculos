@@ -25,9 +25,10 @@ public class Alquiler {
     private Vehiculo turismo;
     private Cliente cliente;
 
-    public Alquiler(Vehiculo turismo, Cliente cliente) {
-        this.turismo = turismo;
-        this.cliente = cliente;
+    public Alquiler(Cliente cliente,Vehiculo turismo ) {
+       this.cliente = cliente;
+       this.turismo = turismo;
+       
     }
 
     public Cliente getCliente() {

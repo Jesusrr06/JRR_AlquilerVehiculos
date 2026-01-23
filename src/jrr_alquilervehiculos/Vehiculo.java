@@ -44,8 +44,8 @@ public class Vehiculo {
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
     }
-      public boolean isDisponible(boolean d) {
-          return d;
+      public boolean isDisponible() {
+          return true;
       }
     
     @Override

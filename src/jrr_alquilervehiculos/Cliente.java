@@ -14,21 +14,32 @@ public class Cliente {
     private String nombre;
     private String localidad;
     private String codigoPostal;
+    private boolean baja;
 
     public Cliente(String dni, String nombre, String localidad, String codigoPostal) {
         this.dni = dni;
         this.nombre = nombre;
         this.localidad = localidad;
         this.codigoPostal = codigoPostal;
+        this.baja = false;
     }
-       public Cliente(Cliente c) {
+
+    public Cliente(Cliente c) {
         this.dni = c.dni;
         this.nombre = c.nombre;
         this.localidad = c.localidad;
         this.codigoPostal = c.codigoPostal;
+        c.baja = false;
     }
- 
-       
+
+    public boolean isBaja() {
+        return baja;
+    }
+
+    public void setBaja(boolean baja) {
+        this.baja = baja;
+    }
+
     public String getDni() {
         return dni;
     }
