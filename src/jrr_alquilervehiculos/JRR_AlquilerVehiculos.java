@@ -13,14 +13,14 @@ import utiles.Utilidades;
  */
 public class JRR_AlquilerVehiculos {
 
-    final static int MAX_ALQUILERES = 20;
-    static int nAlquileres = 0;
+    private final static int MAX_ALQUILERES = 20;
+    private static int nAlquileres = 0;
 
-    final static int MAX_CLIENTES = 40;
-    static int nClientes = 0;
+    private final static int MAX_CLIENTES = 40;
+    private static int nClientes = 0;
 
-    final static int MAX_VEHICULOS = 10;
-    final static int nVehiculos = 0;
+    private final static int MAX_VEHICULOS = 10;
+    private final static int nVehiculos = 0;
 
     public static Vehiculo[] vehiculo;
     public static Cliente[] clientes;
@@ -36,7 +36,7 @@ public class JRR_AlquilerVehiculos {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
+        i = getCliente(dnic);
     }
 
     private static Cliente getCliente(String dnic) {
@@ -62,16 +62,21 @@ public class JRR_AlquilerVehiculos {
     }
 
     private static void AñadirClientes(Cliente c) {
-        int numc = 0;
         boolean b = false;
-        b = false;
         for (int i = 0; i < MAX_CLIENTES && !b; i++) {
-            if (numc < MAX_CLIENTES) {
-                if (clientes[i] != null) {
-                    clientes[i] = c;
-                    nClientes++;
-                    b = true;
+            if (nClientes < MAX_CLIENTES) {
+                if (!clientes[i].getDni().equals(c.getDni())) {
+                    if (clientes[i] == null) {
+                        clientes[i] = c;
+                        nClientes++;
+                        b = true;
+                        ES.escribirLn("Cliente añadido con exito");
+                    }
+                }else{
+                ES.escribirLn("Ya existe ese dni");
                 }
+            }else{
+                
             }
         }
 
@@ -90,7 +95,7 @@ public class JRR_AlquilerVehiculos {
         }
         if (b) {
             quitarHueco(dni);
-            ES.escribirLn("INF: Clienete borrado");
+            ES.escribirLn("INF: Cliente borrado");
 
         }
     }
@@ -101,8 +106,8 @@ public class JRR_AlquilerVehiculos {
         for (int i = 0; i < MAX_ALQUILERES && !b; i++) {
             if (alquileres[i].getCliente().getDni().equals(dni)) {
                 clientes[i] = null;
-                clientes[i] = clientes[MAX_CLIENTES - 1];
-                clientes[MAX_CLIENTES - 1] = null;
+                clientes[i] = clientes[MAX_CLIENTES + 1];
+                clientes[MAX_CLIENTES + 1] = null;
                 nClientes--;
                 b = true;
             }
@@ -142,14 +147,14 @@ public class JRR_AlquilerVehiculos {
         if (c != null) {
 
             v = getVehiculo(matricula);
-            if(v!= null){
+            if (v != null) {
                 nuevoAlquiler(c, v);
-            }else{
-            ES.escribirLn("Error: vehhiculo no existe");
+            } else {
+                ES.escribirLn("Error: vehhiculo no existe");
             }
 
-        }else{
-        ES.escribirLn("Error: Cliente no exisate");
+        } else {
+            ES.escribirLn("Error: Cliente no exisate");
         }
 
     }
