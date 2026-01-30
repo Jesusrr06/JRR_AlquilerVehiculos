@@ -28,7 +28,7 @@ public class ES
                 if( num >= _min && num <= _max)
                     datoValido = true;
                 else 
-                    System.out.printf("Debe ser un número entre %d y %d.\n", _min, _max);
+                    System.out.printf("Debe ser un numero entre %d y %d.\n", _min, _max);
             } 
             catch (Exception e) 
             {
