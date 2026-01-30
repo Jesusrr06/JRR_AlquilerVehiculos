@@ -45,12 +45,16 @@ public class JRR_AlquilerVehiculos {
 
             switch (opcion) {
                 case 1:
-                    String dni = ES.leerCadena("Introduzca un Dni valido");
+                    String dni;
+                    do {
+                        dni = ES.leerCadena("Introduzca un Dni valido");
+                    } while (!Utilidades.comprobarDni(dni));
                     String nombre = ES.leerCadena("Introduzca su nombre");
+                    String direccion = ES.leerCadena("Introduzca su direccion");
                     String localidad = ES.leerCadena("Introduzca su localidad");
                     String codigoPostal = ES.leerCadena("Introduzca su codigo posta");
 
-                    Cliente c = new Cliente(dni, nombre, localidad, codigoPostal);
+                    Cliente c = new Cliente(dni, nombre, direccion, localidad, codigoPostal);
                     AñadirClientes(c);
                     break;
                 case 2:
@@ -64,30 +68,77 @@ public class JRR_AlquilerVehiculos {
 
                     break;
                 case 4:
-                     String matricula = ES.leerCadena("Introduzca un Dni valido");
-                    String  marca = ES.leerCadena("Introduzca su nombre");
-                    String modelo = ES.leerCadena("Introduzca su localidad");
-                    int cilindrada = ES.leerEntero("Introduzca su codigo posta");
-                    Vehiculo v= new Vehiculo(matricula, marca, modelo, cilindrada);
+                    String matricula = ES.leerCadena("Introduzca la matricula valido");
+                    String marca = ES.leerCadena("Introduzca la marca");
+                    String modelo = ES.leerCadena("Introduzca el modelo");
+                    int cilindrada = ES.leerEntero("Introduzca el numero de cilindradas");
+                    Vehiculo v = new Vehiculo(matricula, marca, modelo, cilindrada);
                     AñadirVehiculo(v);
                     break;
                 case 5:
-                    
+                    matricula = ES.leerCadena("Introduce la matricula del coche a borrar");
+                    borrarVehiculo(matricula);
                     break;
                 case 6:
+                    for (int i = 0; i < MAX_CLIENTES; i++) {
+                        ES.escribir(vehiculo[i].toString());
+                    }
 
                     break;
                 case 7:
+                    c = null;
+                    v = null;
+                    do {
+                        dni = ES.leerCadena("Introduzca el dni del cliente");
+                        if (Utilidades.comprobarDni(dni)) {
+                            c = getCliente(dni);
+                        } else {
 
+                            ES.escribirLn("Error: Cliente no exisate");
+                        }
+                    } while (!Utilidades.comprobarDni(dni));
+
+                    matricula = ES.leerCadena("Introduce la matricula del coche");
+                    if (Utilidades.comprobarDni(dni)) {
+                        v = getVehiculo(matricula);
+                    } else {
+                        ES.escribirLn("Error: vehiculo no existe");
+                    }
+
+                    insertarAlquiler(c, v);
                     break;
                 case 8:
+                  c = null;
+                    v = null;
+                    do {
+                        dni = ES.leerCadena("Introduzca el dni del cliente");
+                        if (Utilidades.comprobarDni(dni)) {
+                            c = getCliente(dni);
+                        } else {
+
+                            ES.escribirLn("Error: Cliente no exisate");
+                        }
+                    } while (!Utilidades.comprobarDni(dni));
+
+                    matricula = ES.leerCadena("Introduce la matricula del coche");
+                    if (Utilidades.comprobarDni(dni)) {
+                        v = getVehiculo(matricula);
+                    } else {
+                        ES.escribirLn("Error: vehiculo no existe");
+                    }
+
+                    insertarAlquiler(c, v);
 
                     break;
                 case 9:
+                     for (int i = 0; i < MAX_ALQUILERES; i++) {
+                        ES.escribir(alquileres[i].toString());
+                    }
+                    
                     break;
 
                 default:
-                    throw new AssertionError();
+
             }
 
         } while (opcion != 0);
@@ -108,7 +159,7 @@ public class JRR_AlquilerVehiculos {
     }
 
     private static Cliente getCliente(String dnic) {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < MAX_CLIENTES; i++) {
             if (clientes[i].getDni().equals(dnic)) {
                 return clientes[i];
 
@@ -119,7 +170,7 @@ public class JRR_AlquilerVehiculos {
     }
 
     private static Vehiculo getVehiculo(String m) {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < MAX_VEHICULOS; i++) {
             if (vehiculo[i].getMatricula().equals(m)) {
                 return vehiculo[i];
 
@@ -149,7 +200,8 @@ public class JRR_AlquilerVehiculos {
         }
 
     }
-     private static void AñadirVehiculo(Vehiculo v) {
+
+    private static void AñadirVehiculo(Vehiculo v) {
         boolean b = false;
         for (int i = 0; i < MAX_VEHICULOS && !b; i++) {
             if (nVehiculos < MAX_VEHICULOS) {
@@ -182,13 +234,31 @@ public class JRR_AlquilerVehiculos {
 
         }
         if (b) {
-            quitarHueco(dni);
+            quitarHuecoC(dni);
             ES.escribirLn("INF: Cliente borrado");
 
         }
     }
 
-    private static void quitarHueco(String dni) {
+    private static void borrarVehiculo(String matricula) {
+        boolean b = false;
+        Vehiculo v = null;
+        for (int i = 0; i < MAX_ALQUILERES && !b; i++) {
+            if (alquileres[i].getTurismo().getMatricula().equals(matricula)) {
+
+                alquileres[i].getTurismo().setDisponible(b);
+                b = true;
+            }
+
+        }
+        if (b) {
+            quitarHuecoT(matricula);
+            ES.escribirLn("INF: Vehiculo borrado");
+
+        }
+    }
+
+    private static void quitarHuecoC(String dni) {
         boolean b = false;
         Cliente c = null;
         for (int i = 0; i < MAX_ALQUILERES && !b; i++) {
@@ -204,10 +274,26 @@ public class JRR_AlquilerVehiculos {
 
     }
 
+    private static void quitarHuecoT(String matricula) {
+        boolean b = false;
+        Vehiculo v = null;
+        for (int i = 0; i < MAX_ALQUILERES && !b; i++) {
+            if (alquileres[i].getTurismo().getMatricula().equals(matricula)) {
+                vehiculo[i] = null;
+                vehiculo[i] = vehiculo[MAX_VEHICULOS + 1];
+                vehiculo[MAX_VEHICULOS + 1] = null;
+                nVehiculos--;
+                b = true;
+            }
+
+        }
+
+    }
+
     private static void nuevoAlquiler(Cliente c, Vehiculo v) {
         boolean b = false;
         if (v.isDisponible()) {
-            alquileres[MAX_ALQUILERES] = new Alquiler(c, v);
+            alquileres[nAlquileres] = new Alquiler(c, v);
             nAlquileres++;
             ES.escribir("FNF Alquiler creado");
         } else {
@@ -217,32 +303,20 @@ public class JRR_AlquilerVehiculos {
 
     }
 
-    private static void insertarAlquiler() {
+    private static void insertarAlquiler(Cliente c, Vehiculo v) {
         ES.escribirLn("insertand alquiler");
-        String dni, matricula;
-        Cliente c;
-        Vehiculo v;
 
-        do {
-            dni = ES.leerCadena("Introduzca el dni");
-        } while (Utilidades.comprobarDni(dni));
+        nuevoAlquiler(c, v);
 
-        do {
-            matricula = ES.leerCadena("Introduzca la matricula");
+    }
 
-        } while (Utilidades.comprobarMatricula(matricula));
-        c = getCliente(dni);
-        if (c != null) {
-
-            v = getVehiculo(matricula);
-            if (v != null) {
-                nuevoAlquiler(c, v);
-            } else {
-                ES.escribirLn("Error: vehhiculo no existe");
+    private static void cerrarAlquiler(Cliente c, Vehiculo v) {
+        ES.escribirLn("Borrando Alquiler ");
+        for (int i = 0; i < MAX_ALQUILERES; i++) {
+            if(alquileres[i].getCliente().equals(c) && alquileres[i].getTurismo().equals(v)){
+            alquileres[i]= null;
             }
-
-        } else {
-            ES.escribirLn("Error: Cliente no exisate");
+            
         }
 
     }

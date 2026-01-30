@@ -12,13 +12,15 @@ public class Cliente {
 
     private String dni;
     private String nombre;
+    private String direccion;
     private String localidad;
     private String codigoPostal;
     private boolean baja;
 
-    public Cliente(String dni, String nombre, String localidad, String codigoPostal) {
+    public Cliente(String dni, String nombre,String direccion ,String localidad, String codigoPostal) {
         this.dni = dni;
         this.nombre = nombre;
+        this.direccion= direccion;
         this.localidad = localidad;
         this.codigoPostal = codigoPostal;
         this.baja = false;
