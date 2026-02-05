@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
@@ -22,20 +22,16 @@ public class JRR_AlquilerVehiculos {
     private final static int MAX_VEHICULOS = 50;
     private static int nVehiculos = 0;
 
-    public static Vehiculo[] vehiculo;
-    public static Cliente[] clientes;
-    public static Alquiler[] alquileres;
+    public static Vehiculo[] vehiculo= new Vehiculo[MAX_VEHICULOS];;
+    public static Cliente[] clientes= new Cliente[MAX_CLIENTES];;
+    public static Alquiler[] alquileres= new Alquiler[MAX_ALQUILERES];;
 
-    public JRR_AlquilerVehiculos() {
-        vehiculo = new Vehiculo[MAX_VEHICULOS];
-        clientes = new Cliente[MAX_CLIENTES];
-        alquileres = new Alquiler[MAX_ALQUILERES];
-    }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
 
         int opcion;
 
@@ -63,7 +59,7 @@ public class JRR_AlquilerVehiculos {
                     break;
                 case 3:
                     for (int i = 0; i < MAX_CLIENTES; i++) {
-                        ES.escribir(clientes[i].toString());
+                        ES.escribir(JRR_AlquilerVehiculos.clientes[i].toString());
                     }
 
                     break;
@@ -146,17 +142,17 @@ public class JRR_AlquilerVehiculos {
     }
 
     public static void menu() {
-        ES.escribir("1.añadir cliente,"
-                + "2. borrar cliente,"
-                + "3. listar clientes,"
-                + "4. añadir vehículo,"
-                + "5. borrar vehículo,"
-                + "6. listar vehículo,"
-                + "7. abrir un alquiler,"
-                + "8. cerrar un alquiler,"
-                + "9.listar alquileres "
-                + "0. salir");
-    }
+        ES.escribirLn("1.añadir cliente.");
+   ES.escribirLn("2. borrar cliente.");
+       ES.escribirLn( "3. listar clientes.");
+   ES.escribirLn("4. añadir vehículo.");
+   ES.escribirLn("5. borrar vehículo.");
+   ES.escribirLn("6. listar vehículo.");
+   ES.escribirLn("7. abrir un alquiler.");
+   ES.escribirLn("8. cerrar un alquiler.");
+   ES.escribirLn("9.listar alquileres.");
+   ES.escribirLn( "0. salir.");
+}
 
     private static Cliente getCliente(String dnic) {
         for (int i = 0; i < MAX_CLIENTES; i++) {

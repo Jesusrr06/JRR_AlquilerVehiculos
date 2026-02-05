@@ -30,7 +30,7 @@ public class ES
                 else 
                     System.out.printf("Debe ser un numero entre %d y %d.\n", _min, _max);
             } 
-            catch (Exception e) 
+            catch (NumberFormatException e) 
             {
                 System.out.print( "El dato introducido no es correcto");
                 System.out.println( " Por favor, introduzca un valor correcto.");
@@ -58,7 +58,7 @@ public class ES
                 datoValido = true;
                 
             } 
-            catch (Exception e) 
+            catch (NumberFormatException e) 
             {
                 System.out.print( "El dato introducido no es correcto");
                 System.out.println( " Por favor, introduzca un valor correcto.");
@@ -83,7 +83,7 @@ public class ES
                 
                 datoValido = true;                
             } 
-            catch (Exception e) 
+            catch (NumberFormatException e) 
             {
                 System.out.print( "El dato introducido no es correcto");
                 System.out.println( " Por favor, introduzca un valor correcto.");
@@ -123,7 +123,7 @@ boolean    valido = false;
     static public String leerCadena( String _msg)
     {
         Scanner s = new Scanner(System.in);
-        String cadena = "" ;
+        String cadena ;
         System.out.print( _msg);
         
         cadena = s.nextLine();               
