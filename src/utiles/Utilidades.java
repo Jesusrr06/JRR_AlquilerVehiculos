@@ -99,6 +99,7 @@ public class Utilidades {
         if (dni.endsWith(L)) {
             return true;
         } else {
+            System.out.println("Ese no es valido");
             return false;
         }
 
