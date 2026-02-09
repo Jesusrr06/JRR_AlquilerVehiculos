@@ -7,9 +7,6 @@ package jrr_alquilervehiculos;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.Temporal;
-import java.time.temporal.TemporalAmount;
-import java.util.Date;
 
 /**
  *
@@ -62,14 +59,14 @@ public class Alquiler {
     public void cerrar() 
     {
         this.getTurismo().setDisponible(true);
-
+        
         this.dias = diferenciaDias(this.fecha) + 1;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Alquiler{");
+        sb.append("Alquiler");
         sb.append("FORMATO_FECHA=").append(FORMATO_FECHA);
         sb.append(", PRECIO_DIA=").append(PRECIO_DIA);
         sb.append(", fecha=").append(fecha);

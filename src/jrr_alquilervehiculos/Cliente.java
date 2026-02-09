@@ -17,10 +17,10 @@ public class Cliente {
     private String codigoPostal;
     private boolean baja;
 
-    public Cliente(String dni, String nombre,String direccion ,String localidad, String codigoPostal) {
+    public Cliente(String dni, String nombre, String direccion, String localidad, String codigoPostal) {
         this.dni = dni;
         this.nombre = nombre;
-        this.direccion= direccion;
+        this.direccion = direccion;
         this.localidad = localidad;
         this.codigoPostal = codigoPostal;
         this.baja = false;
@@ -62,11 +62,21 @@ public class Cliente {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Cliente{");
+        sb.append("\n");
+
         sb.append("dni=").append(dni);
+        sb.append("\n");
+
         sb.append(", nombre=").append(nombre);
+        sb.append("\n");
+        sb.append("direccion").append(direccion);
+        sb.append("\n");
         sb.append(", localidad=").append(localidad);
+        sb.append("\n");
+
         sb.append(", codigoPostal=").append(codigoPostal);
-        sb.append('}');
+        sb.append("\n");
+
         return sb.toString();
     }
 
