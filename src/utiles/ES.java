@@ -84,13 +84,14 @@ public class ES {
         int num = 0;
         do {
             try {
-                System.out.print(_msg);
+                System.out.println(_msg +" entre "+_min +" y "+ _max);
                 num = Integer.parseInt(s.nextLine());
 
                 if (num >= _min && num <= _max) {
                     datoValido = true;
                 } else {
                     System.out.printf("Debe ser un numero entre %d y %d.\n", _min, _max);
+                    
                 }
             } catch (NumberFormatException e) {
                 System.out.print("El dato introducido no es correcto");
@@ -107,7 +108,9 @@ public class ES {
         boolean valido2;
         try {
             System.out.println(_msg);
+            
             String cadena = sb.next();
+            
             if (cadena.toUpperCase().equals("SI") | cadena.toUpperCase().equals("S")) {
                 valido = true;
                 valido2 = true;
@@ -132,7 +135,7 @@ public class ES {
         System.out.print(_msg);
 
         cadena = s.nextLine();
-
+        System.out.println("");
         return cadena;
     }
 

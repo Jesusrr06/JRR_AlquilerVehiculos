@@ -4,6 +4,7 @@
  */
 package jrr_alquilervehiculos;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -12,7 +13,7 @@ import java.time.temporal.ChronoUnit;
  *
  * @author dam1
  */
-public class Alquiler {
+public class Alquiler implements Serializable{
 
     final private DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
@@ -22,10 +23,10 @@ public class Alquiler {
     private Vehiculo turismo;
     private Cliente cliente;
 
-    public Alquiler(Cliente cliente,Vehiculo turismo ) {
-       this.cliente = cliente;
-       this.turismo = turismo;
-       
+    public Alquiler(Cliente cliente, Vehiculo turismo) {
+        this.cliente = cliente;
+        this.turismo = turismo;
+
     }
 
     public Cliente getCliente() {
@@ -56,10 +57,9 @@ public class Alquiler {
 
     }
 
-    public void cerrar() 
-    {
+    public void cerrar() {
         this.getTurismo().setDisponible(true);
-        
+
         this.dias = diferenciaDias(this.fecha) + 1;
     }
 

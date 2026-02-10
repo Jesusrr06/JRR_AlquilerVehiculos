@@ -4,11 +4,13 @@
  */
 package jrr_alquilervehiculos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author dam1
  */
-public abstract class Vehiculo {
+public abstract class Vehiculo implements Serializable{
 
     private String matricula;
     private String marca;
@@ -23,6 +25,8 @@ public abstract class Vehiculo {
         this.marca = marca;
         this.modelo = modelo;
         this.cilindrada = cilindrada;
+        disponible= true;
+        baja= false;
     }
 
     public String getMatricula() {

@@ -4,11 +4,13 @@
  */
 package jrr_alquilervehiculos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author dam1
  */
-public class Cliente {
+public class Cliente implements Serializable{
 
     private String dni;
     private String nombre;
@@ -76,6 +78,7 @@ public class Cliente {
 
         sb.append(", codigoPostal=").append(codigoPostal);
         sb.append("\n");
+        sb.append("baja:").append( baja);
 
         return sb.toString();
     }

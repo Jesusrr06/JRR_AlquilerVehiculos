@@ -17,10 +17,10 @@ public abstract class Mercancias extends Vehiculo {
         super(matricula, marca, modelo, cilindrada);
         this.pma = pma;
         this.volumen = volumen;
-    }
+    } 
 
     public Mercancias(int pma, int volumen, Vehiculo v) {
-        super(v.getMatricula(), v.getMarca(), v.getModelo(), v.getCilindrada());
+         super(v.getMatricula(), v.getMarca(), v.getModelo(), v.getCilindrada());
         this.pma = pma;
         this.volumen = volumen;
 
