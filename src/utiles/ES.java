@@ -146,5 +146,20 @@ public class ES {
     public static void escribir(String _cadena) {
         System.out.print(_cadena);
     }
+    public  static boolean  escribirArchivo(){
+    String ruta= "C:/Users/dam1/Desktop/JRR_AlquilerVehiculos/fichero.txt";
+    String datos;
+            boolean soobrescribir= false;
+            
+            
+            
+            
+            return true;
+    }
+     public  static void  leerArchivo(){
+    String ruta= "C:/Users/dam1/Desktop/JRR_AlquilerVehiculos/fichero.txt";
+   
+    }
+
 
 }

@@ -586,12 +586,12 @@ public class JRR_AlquilerVehiculos {
     public static Alquiler[] cargarAlquileres() {
         Alquiler[] a = new Alquiler[MAX_ALQUILERES];
         try {
-            try (FileInputStream fichero = new FileInputStream("Alquileres.dat")) {
+            try (FileInputStream fichero = new FileInputStream("Alquileres_JRR.dat")) {
                 ObjectInputStream entrada = new ObjectInputStream(fichero);
                 a = (Alquiler[]) entrada.readObject();
             }
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error leyendo fichero Alquileres.dat");
+            System.out.println("Error leyendo fichero Alquileres_JRR.dat");
         }
         return a;
     }
@@ -599,12 +599,12 @@ public class JRR_AlquilerVehiculos {
     private static Cliente[] cargarClientes() {
         Cliente[] c = new Cliente[MAX_CLIENTES];
         try {
-            try (FileInputStream fichero = new FileInputStream("Clientes.dat")) {
+            try (FileInputStream fichero = new FileInputStream("Clientes_JRR.dat")) {
                 ObjectInputStream entrada = new ObjectInputStream(fichero);
                 c = (Cliente[]) entrada.readObject();
             }
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error leyendo fichero Clientes.dat");
+            System.out.println("Error leyendo fichero Clientes_JRR.dat");
         }
         return c;
     }
@@ -612,12 +612,12 @@ public class JRR_AlquilerVehiculos {
     private static Vehiculo[] cargarVehiculos() {
         Vehiculo[] v = new Vehiculo[MAX_VEHICULOS];
         try {
-            try (FileInputStream fichero = new FileInputStream("Vehiculos.dat")) {
+            try (FileInputStream fichero = new FileInputStream("Vehiculos_JRR.dat")) {
                 ObjectInputStream entrada = new ObjectInputStream(fichero);
                 v = (Vehiculo[]) entrada.readObject();
             }
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error leyendo fichero Vehiculos.dat");
+            System.out.println("Error leyendo fichero Vehiculos_JRR.dat");
         }
         return v;
     }

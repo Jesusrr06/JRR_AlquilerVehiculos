@@ -15,7 +15,7 @@ import java.time.temporal.ChronoUnit;
  */
 public class Alquiler implements Serializable{
 
-    final private DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    final private DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("yyyyMMdd");
 
     final private double PRECIO_DIA = 30;
     private LocalDateTime fecha;
@@ -66,14 +66,13 @@ public class Alquiler implements Serializable{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Alquiler");
-        sb.append("FORMATO_FECHA=").append(FORMATO_FECHA);
-        sb.append(", PRECIO_DIA=").append(PRECIO_DIA);
-        sb.append(", fecha=").append(fecha);
-        sb.append(", dias=").append(dias);
-        sb.append(", turismo=").append(turismo);
-        sb.append(", cliente=").append(cliente);
-        sb.append('}');
+        sb.append("").append(FORMATO_FECHA);
+        sb.append("\n Precio").append(PRECIO_DIA);
+        sb.append("\n").append(fecha);
+        sb.append("\n numDias ").append(dias);
+        sb.append("\nVehiculo=").append(turismo);
+        sb.append(" cliente=").append(cliente);
+        
         return sb.toString();
     }
 
