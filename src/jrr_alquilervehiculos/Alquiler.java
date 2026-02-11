@@ -4,18 +4,16 @@
  */
 package jrr_alquilervehiculos;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.Temporal;
-import java.time.temporal.TemporalAmount;
-import java.util.Date;
 
 /**
  *
  * @author dam1
  */
-public class Alquiler {
+public class Alquiler implements Serializable{
 
     final private DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
@@ -25,10 +23,10 @@ public class Alquiler {
     private Vehiculo turismo;
     private Cliente cliente;
 
-    public Alquiler(Cliente cliente,Vehiculo turismo ) {
-       this.cliente = cliente;
-       this.turismo = turismo;
-       
+    public Alquiler(Cliente cliente, Vehiculo turismo) {
+        this.cliente = cliente;
+        this.turismo = turismo;
+
     }
 
     public Cliente getCliente() {
@@ -59,8 +57,7 @@ public class Alquiler {
 
     }
 
-    public void cerrar() 
-    {
+    public void cerrar() {
         this.getTurismo().setDisponible(true);
 
         this.dias = diferenciaDias(this.fecha) + 1;
@@ -69,7 +66,7 @@ public class Alquiler {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Alquiler{");
+        sb.append("Alquiler");
         sb.append("FORMATO_FECHA=").append(FORMATO_FECHA);
         sb.append(", PRECIO_DIA=").append(PRECIO_DIA);
         sb.append(", fecha=").append(fecha);

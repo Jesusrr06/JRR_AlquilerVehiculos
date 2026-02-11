@@ -4,110 +4,64 @@
  */
 package utiles;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  *
  * @author dam1
  */
 public class Utilidades {
-
+    
     public Utilidades() {
     }
-
+    
     public static boolean comprobarMatricula(String m) {
-
-        return false;
-
-    }
-
-    public static boolean comprobarDni(String dni) {
-        String num = dni.substring(0, dni.length() - 1);
-        int numdni = Integer.parseInt(num);
-
-        int letra = numdni % 23;
-        String L = null;
-        switch (letra) {
-            case 1:
-                L = "R";
-                break;
-            case 2:
-                L = "W";
-                break;
-            case 3:
-                L = "A";
-                break;
-            case 4:
-                L = "G";
-                break;
-            case 5:
-                L = "M";
-                break;
-            case 6:
-                L = "Y";
-                break;
-            case 7:
-                L = "F";
-                break;
-            case 8:
-                L = "P";
-                break;
-            case 9:
-                L = "D";
-                break;
-            case 10:
-                L = "X";
-                break;
-            case 11:
-                L = "B";
-                break;
-            case 12:
-                L = "N";
-                break;
-            case 13:
-                L = "J";
-                break;
-            case 14:
-                L = "Z";
-                break;
-            case 15:
-                L = "S";
-                break;
-            case 16:
-                L = "Q";
-                break;
-            case 17:
-                L = "V";
-                break;
-            case 18:
-                L = "H";
-                break;
-            case 19:
-                L = "L";
-                break;
-            case 20:
-                L = "C";
-                break;
-            case 21:
-                L = "K";
-                break;
-            case 22:
-                L = "E";
-                break;
-            case 0:
-                L = "T";
-                break;
+        boolean val = false;
+        Pattern pat = Pattern.compile("^\\d{4}[^aeiouñ]{3}$");
+        Matcher mat = pat.matcher(m);
+        if (mat.find()) {
+            val = true;
         }
-        if (dni.endsWith(L)) {
-            return true;
-        } else {
-            System.out.println("Ese no es valido");
+        if (!val) {
+            ES.escribirLn("Vuelva a intentarlo");
+        }
+        return val;
+    }
+    
+    public static boolean comprobarDni(String dni) {
+        if (dni == null || dni.length() != 9) {
             return false;
         }
-
+        boolean correcto = false;
+        dni = dni.toUpperCase();
+        Pattern patDNI = Pattern.compile("^\\d{8}[TRWAGMYFPDXBNJZSQVHLCKE]$");
+        Matcher matDNI = patDNI.matcher(dni);
+        if (matDNI.find()) {
+            correcto = true;
+        }
+        
+        String num = dni.substring(0, 8);
+        char letra = dni.charAt(8);
+        String letras = "TRWAGMYFPDXBNJZSQVHLCKE";
+        int numeros = Integer.parseInt(num);
+        char letraCorrecta = letras.charAt(numeros % 23);
+        if (letra != letraCorrecta) {
+            ES.escribirLn("Intentelo de nuevo");
+        }
+        return correcto & letra == letraCorrecta;
     }
-
+    
     public static boolean comprobarCodigoPostal(String codP) {
-
-        return false;
-
+        boolean val = false;
+        Pattern patr = Pattern.compile("^[0-5]\\d{4}$");
+        Matcher match = patr.matcher(codP);
+        if (match.find()) {
+            val = true;
+        }
+        if (!val) {
+            ES.escribirLn("Vuelva a intentarlo");
+        }
+        return val;
     }
 }
