@@ -147,7 +147,7 @@ public class ES {
         System.out.print(_cadena);
     }
     public  static boolean  escribirArchivo(){
-    String ruta= "C:/Users/dam1/Desktop/JRR_AlquilerVehiculos/fichero.txt";
+    String ruta= "C://ficheroC.txt";
     String datos;
             boolean soobrescribir= false;
             
@@ -161,5 +161,5 @@ public class ES {
    
     }
 
-
+   
 }
