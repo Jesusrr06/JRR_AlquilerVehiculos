@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author dam1
  */
-public class Cliente implements Serializable{
+public class Cliente implements Serializable {
 
     private String dni;
     private String nombre;
@@ -78,7 +78,32 @@ public class Cliente implements Serializable{
 
         sb.append(", codigoPostal=").append(codigoPostal);
         sb.append("\n");
-        sb.append("baja:").append( baja);
+        sb.append("baja:").append(baja);
+
+        return sb.toString();
+    }
+
+    public String toString2() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Cliente{");
+        sb.append("#");
+
+        sb.append("dni=").append(dni);
+        sb.append("#");
+
+        sb.append(", nombre=").append(nombre);
+        sb.append("#");
+
+        sb.append("direccion").append(direccion);
+        sb.append("#");
+
+        sb.append(", localidad=").append(localidad);
+        sb.append("#");
+
+        sb.append(", codigoPostal=").append(codigoPostal);
+        sb.append("#");
+
+        sb.append("baja:").append(baja);
 
         return sb.toString();
     }

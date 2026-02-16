@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
 import utiles.ES;
 import utiles.Utilidades;
 
@@ -131,14 +132,47 @@ public class JRR_AlquilerVehiculos {
 
                     break;
                 case 12:
-                    guardarAlquilerEnFichero(alquileres);
+                    opcion = ES.leerEntero("Introduce si quiere guerdar los archivos en (1)binario o (2)Fichero txt ");
+                    
+                    switch(opcion){
+                        case 1:
+                                  guardarAlquilerEnFichero(alquileres);
                     guardarClientesEnFichero(clientes);
                     guardarVehiculosEnFichero(vehiculos);
-                    break;
+                            break;
+                        case 2:
+                            String linea=  Arrays.toString(clientes);
+                           String ruta= ES.leerCadena("Introduce el nombre del archivo de Clientes.txt");
+                          boolean b= ES.leerBoolean("Desea sobreescribir el archivo?");
+                           ES.escribirArchivo( ruta ,  linea, b);
+                            
+                             linea=  Arrays.toString(vehiculos);
+                             
+                            ruta= ES.leerCadena("Introduce el nombre del archivo de Vehiuclos.txt");
+                            b= ES.leerBoolean("Desea sobreescribir el archivo?");
+                            ES.escribirArchivo( ruta ,  linea, b);
+                               
+                             linea=  Arrays.toString( alquileres);
+                            ruta= ES.leerCadena("Introduce el nombre del archivo de Alquileres.txt");
+                            b= ES.leerBoolean("Desea sobreescribir el archivo?");
+                            ES.escribirArchivo( ruta ,  linea, b);
+                            break;
+                  
+                    }
+                            break;
                 case 13:
+                      opcion = ES.leerEntero("Introduce si quiere guerdar los archivos en (1)binario o (2)Fichero txt ");
+                    
+                    switch(opcion){
+                        case 1:
                     alquileres = cargarAlquileres();
                     vehiculos = cargarVehiculos();
                     clientes = cargarClientes();
+                    break;
+                        case 2:
+                            
+                            break;
+                    }
                     break;
                 default:
 

@@ -4,6 +4,12 @@
  */
 package utiles;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.Scanner;
 
 /**
@@ -84,14 +90,14 @@ public class ES {
         int num = 0;
         do {
             try {
-                System.out.println(_msg +" entre "+_min +" y "+ _max);
+                System.out.println(_msg + " entre " + _min + " y " + _max);
                 num = Integer.parseInt(s.nextLine());
 
                 if (num >= _min && num <= _max) {
                     datoValido = true;
                 } else {
                     System.out.printf("Debe ser un numero entre %d y %d.\n", _min, _max);
-                    
+
                 }
             } catch (NumberFormatException e) {
                 System.out.print("El dato introducido no es correcto");
@@ -108,9 +114,9 @@ public class ES {
         boolean valido2;
         try {
             System.out.println(_msg);
-            
+
             String cadena = sb.next();
-            
+
             if (cadena.toUpperCase().equals("SI") | cadena.toUpperCase().equals("S")) {
                 valido = true;
                 valido2 = true;
@@ -146,20 +152,27 @@ public class ES {
     public static void escribir(String _cadena) {
         System.out.print(_cadena);
     }
-    public  static boolean  escribirArchivo(){
-    String ruta= "C://ficheroC.txt";
-    String datos;
-            boolean soobrescribir= false;
-            
-            
-            
-            
-            return true;
-    }
-     public  static void  leerArchivo(){
-    String ruta= "C:/Users/dam1/Desktop/JRR_AlquilerVehiculos/fichero.txt";
-   
+
+    public static boolean escribirArchivo(String ruta, String linea, boolean sobreescribirArchivo) {
+
+        try {
+
+            FileWriter fichero = new FileWriter(ruta);
+            BufferedWriter bw = new BufferedWriter(fichero);
+
+            bw.write(linea);
+
+            bw.close();
+
+        } catch (Exception e) {
+        }
+
+        return true;
     }
 
-   
+    public static void leerArchivo() {
+        String ruta = "C:../fichero_JRR.txt";
+
+    }
+
 }
