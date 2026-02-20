@@ -43,9 +43,9 @@ public class Deportivo extends Turismo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(super.toString());
-        sb.append("descapotable=").append(descapotable);
-        sb.append(", cambio=").append(cambio);
-        sb.append('}');
+        sb.append("").append(descapotable);
+        sb.append("#").append(cambio);
+        sb.append("#\n");
         return sb.toString();
     }
 

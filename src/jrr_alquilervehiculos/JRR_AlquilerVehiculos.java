@@ -18,22 +18,22 @@ import utiles.Utilidades;
  * @author Jesus
  */
 public class JRR_AlquilerVehiculos {
-
+    
     private final static int MAX_ALQUILERES = 50;
     private static int nAlquileres = 0;
-
+    
     private final static int MAX_CLIENTES = 50;
     private static int nClientes = 0;
-
+    
     private final static int MAX_VEHICULOS = 50;
     private static int nVehiculos = 0;
-
+    
     private static Vehiculo[] vehiculos = new Vehiculo[MAX_VEHICULOS];
     ;
     private static Cliente[] clientes = new Cliente[MAX_CLIENTES];
     ;
     private static Alquiler[] alquileres = new Alquiler[MAX_ALQUILERES];
-
+    
     ;
 
 
@@ -41,15 +41,15 @@ public class JRR_AlquilerVehiculos {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
+        
         int opcion;
         String dni;
         String matricula;
-
+        
         do {
             menu();
             opcion = ES.leerEntero("Introduzca una opcion: \n");
-
+            
             switch (opcion) {
                 case 1:
                     Cliente c = insertarClientes();
@@ -61,13 +61,13 @@ public class JRR_AlquilerVehiculos {
                     break;
                 case 3:
                     listarClientes();
-
+                    
                     break;
                 case 4:
                     listarClientesBaja();
                     break;
                 case 5:
-
+                    
                     Vehiculo v = insertarVehiculo();
                     AnadirVehiculo(v);
                     break;
@@ -77,12 +77,12 @@ public class JRR_AlquilerVehiculos {
                     break;
                 case 7:
                     listarVehiculos();
-
+                    
                     break;
                 case 8:
                     listarVehiculosBaja();
                     break;
-
+                
                 case 9:
                     c = null;
                     v = null;
@@ -94,14 +94,14 @@ public class JRR_AlquilerVehiculos {
                             ES.escribirLn("Error: Cliente no exisate");
                         }
                     } while (!Utilidades.comprobarDni(dni));
-
+                    
                     matricula = ES.leerCadena("Introduce la matricula del coche ");
                     if (Utilidades.comprobarDni(dni)) {
                         v = getVehiculos(matricula);
                     } else {
                         ES.escribirLn("Error: vehiculo no existe");
                     }
-
+                    
                     insertarAlquiler(c, v);
                     break;
                 case 10:
@@ -112,130 +112,120 @@ public class JRR_AlquilerVehiculos {
                         if (Utilidades.comprobarDni(dni)) {
                             c = getClientes(dni);
                         } else {
-
+                            
                             ES.escribirLn("Error: Cliente no exisate");
                         }
                     } while (!Utilidades.comprobarDni(dni));
-
+                    
                     matricula = ES.leerCadena("Introduce la matricula del coche\n");
                     if (Utilidades.comprobarMatricula(matricula)) {
                         v = getVehiculos(matricula);
                     } else {
                         ES.escribirLn("Error: vehiculo no existe");
                     }
-
+                    
                     cerrarAlquiler(c, v);
-
+                    
                     break;
                 case 11:
                     listarAlquileres();
-
+                    
                     break;
                 case 12:
                     opcion = ES.leerEntero("Introduce si quiere guerdar los archivos en (1)binario o (2)Fichero txt ");
                     
-                    switch(opcion){
+                    switch (opcion) {
                         case 1:
-                                  guardarAlquilerEnFichero(alquileres);
-                    guardarClientesEnFichero(clientes);
-                    guardarVehiculosEnFichero(vehiculos);
+                            guardarAlquilerEnFichero(alquileres);
+                            guardarClientesEnFichero(clientes);
+                            guardarVehiculosEnFichero(vehiculos);
                             break;
                         case 2:
-                            String linea=  Arrays.toString(clientes);
-                           String ruta= ES.leerCadena("Introduce el nombre del archivo de Clientes.txt");
-                          boolean b= ES.leerBoolean("Desea sobreescribir el archivo?");
-                           ES.escribirArchivo( ruta ,  linea, b);
+                            String linea = Arrays.toString(clientes);
+                            String ruta = ES.leerCadena("Introduce el nombre del archivo de Clientes.txt");
+                            boolean b = ES.leerBoolean("Desea sobreescribir el archivo?");
+                            ES.escribirArchivo(ruta, linea, b);
                             
-                             linea=  Arrays.toString(vehiculos);
-                             
-                            ruta= ES.leerCadena("Introduce el nombre del archivo de Vehiuclos.txt");
-                            b= ES.leerBoolean("Desea sobreescribir el archivo?");
-                            ES.escribirArchivo( ruta ,  linea, b);
-                               
-                             linea=  Arrays.toString( alquileres);
-                            ruta= ES.leerCadena("Introduce el nombre del archivo de Alquileres.txt");
-                            b= ES.leerBoolean("Desea sobreescribir el archivo?");
-                            ES.escribirArchivo( ruta ,  linea, b);
+                            linea = Arrays.toString(vehiculos);
+                            
+                            ruta = ES.leerCadena("Introduce el nombre del archivo de Vehiuclos.txt");
+                            b = ES.leerBoolean("Desea sobreescribir el archivo?");
+                            ES.escribirArchivo(ruta, linea, b);
+                            
+                            linea = Arrays.toString(alquileres);
+                            ruta = ES.leerCadena("Introduce el nombre del archivo de Alquileres.txt");
+                            b = ES.leerBoolean("Desea sobreescribir el archivo?");
+                            ES.escribirArchivo(ruta, linea, b);
                             break;
-                  
+                        
                     }
-                            break;
-                case 13:
-                      opcion = ES.leerEntero("Introduce si quiere guerdar los archivos en (1)binario o (2)Fichero txt ");
-                    
-                    switch(opcion){
-                        case 1:
-                    alquileres = cargarAlquileres();
-                    vehiculos = cargarVehiculos();
-                    clientes = cargarClientes();
                     break;
-                        case 2:
-                            
-                            break;
-                    }
+                case 13:
+                    guardarDatos();
+                    
                     break;
                 default:
-
+                
             }
-
+            
         } while (opcion != 0);
-
+        
     }
-
+    
     public static void menu() {
         ES.escribirLn("1.anadir cliente.");
         ES.escribirLn("2. Dar de baja a un cliente.");
         ES.escribirLn("3. listar clientes.");
         ES.escribirLn("4. listar clientes de baja.");
-
+        
         ES.escribirLn("5. anadir vehiculo.");
         ES.escribirLn("6. Dar de baja a un vehiculo.");
         ES.escribirLn("7. listar vehiculos.");
         ES.escribirLn("8. listar vehiculos de baja.");
-
+        
         ES.escribirLn("9. abrir un alquiler.");
         ES.escribirLn("10. cerrar un alquiler.");
         ES.escribirLn("11.listar alquileres.");
         ES.escribirLn("12. Guardar datos alquiler/Cliente/Vehiculos.");
         ES.escribirLn("13. Cargar datos alquiler/clientes/Vehiculos.");
-
+        
         ES.escribirLn("0. salir.");
-
+        
     }
-
+    
     private static Cliente getClientes(String dnic) {
         for (int i = 0; i <= nClientes; i++) {
             if (clientes[i] == null) {
                 return null;
             } else if (clientes[i].getDni().equals(dnic)) {
                 return clientes[i];
-
+                
             }
         }
-
+        
         return null;
     }
-
+    
     private static Vehiculo getVehiculos(String m) {
         for (int i = 0; i <= nVehiculos; i++) {
             if (vehiculos[i] == null) {
                 return null;
             } else if (vehiculos[i].getMatricula().equals(m)) {
                 return vehiculos[i];
-
+                
             }
         }
-
+        
         return null;
     }
-
+    
     private static void AnadirClientes(Cliente c) {
         boolean b = false;
         if (nClientes < MAX_CLIENTES) {
             if (getClientes(c.getDni()) == null && !b) {
-
+                
                 clientes[nClientes] = c;
-
+                
                 nClientes++;
                 ES.escribirLn("Cliente añadido con exito");
             } else if (getClientes(c.getDni()).equals(c)) {
@@ -245,34 +235,34 @@ public class JRR_AlquilerVehiculos {
         } else {
             System.out.println("Capacidad al maximo");
         }
-
+        
     }
-
+    
     private static void AnadirVehiculo(Vehiculo v) {
         boolean b = false;
-
+        
         if (nVehiculos < MAX_VEHICULOS) {
             if (getVehiculos(v.getMatricula()) == null && !b) {
-
+                
                 vehiculos[nClientes] = v;
                 nVehiculos++;
                 ES.escribirLn("Vehiculo añadido con exito");
-
+                
             } else if (getVehiculos(v.getMatricula()) != null) {
                 if (getVehiculos(v.getMatricula()).equals(v)) {
                     ES.escribirLn("Ya esxiste alguien con esa matricula");
                     b = true;
                 }
-
+                
             }
         } else {
             ES.escribirLn("Capacidad al maximo");
         }
     }
-
+    
     private static void borrarCliente(String dni) {
         boolean b = false;
-
+        
         while (!Utilidades.comprobarDni(dni)) {
             dni = ES.leerCadena("Introduzca un Dni valido");
         }
@@ -281,17 +271,17 @@ public class JRR_AlquilerVehiculos {
                 if (alquileres[i].getCliente().getDni().equals(dni)) {
                     alquileres[i].getCliente().setBaja(b);
                     b = true;
-
+                    
                 }
             }
         }
         if (b) {
             quitarHuecoC(dni);
             ES.escribirLn("INF: Cliente borrado");
-
+            
         }
     }
-
+    
     private static void borrarVehiculo(String matricula) {
         boolean b = false;
         Vehiculo v = null;
@@ -300,22 +290,22 @@ public class JRR_AlquilerVehiculos {
                 if (alquileres[i].getTurismo().getMatricula().equals(matricula)) {
                     alquileres[i].getTurismo().setDisponible(b);
                     b = true;
-
+                    
                 }
-
+                
             }
-
+            
         }
         if (b) {
             quitarHuecoT(matricula);
             ES.escribirLn("INF: Vehiculo borrado");
-
+            
         }
     }
-
+    
     private static void darBajaCliente(String dni) {
         boolean b = false;
-
+        
         while (!Utilidades.comprobarDni(dni)) {
             dni = ES.leerCadena("Introduzca un Dni valido");
         }
@@ -324,18 +314,18 @@ public class JRR_AlquilerVehiculos {
         ES.escribirLn("");
         b = true;
     }
-
+    
     private static void darBajaVehiculo(String matricula) {
         boolean b = false;
-
+        
         while (!Utilidades.comprobarDni(matricula)) {
             matricula = ES.leerCadena("Introduzca un Dni valido");
         }
         getVehiculos(matricula).setBaja(b);
         b = true;
-
+        
     }
-
+    
     private static void quitarHuecoC(String dni) {
         boolean b = false;
         for (int i = 0; i < MAX_ALQUILERES && !b; i++) {
@@ -346,11 +336,11 @@ public class JRR_AlquilerVehiculos {
                 nClientes--;
                 b = true;
             }
-
+            
         }
-
+        
     }
-
+    
     private static void quitarHuecoT(String matricula) {
         boolean b = false;
         for (int i = 0; i < nVehiculos && !b; i++) {
@@ -363,11 +353,11 @@ public class JRR_AlquilerVehiculos {
                     b = true;
                 }
             }
-
+            
         }
-
+        
     }
-
+    
     private static void nuevoAlquiler(Cliente c, Vehiculo v) {
         boolean b = false;
         if (c != null && v != null) {
@@ -380,22 +370,22 @@ public class JRR_AlquilerVehiculos {
             }
         }
         if (v == null) {
-
+            
             ES.escribir("vehiculo no disponible");
         }
         if (c == null) {
             ES.escribir("Cliente no disponible");
-
+            
         }
     }
-
+    
     private static void insertarAlquiler(Cliente c, Vehiculo v) {
         ES.escribirLn("insertand alquiler");
-
+        
         nuevoAlquiler(c, v);
-
+        
     }
-
+    
     private static void cerrarAlquiler(Cliente c, Vehiculo v) {
         ES.escribirLn("Borrando Alquiler ");
         for (int i = 0; i < MAX_ALQUILERES; i++) {
@@ -403,38 +393,38 @@ public class JRR_AlquilerVehiculos {
                 if (alquileres[i].getCliente().equals(c) && alquileres[i].getTurismo().equals(v)) {
                     alquileres[i].cerrar();
                     nAlquileres--;
-
+                    
                 }
             }
-
+            
         }
-
+        
     }
-
+    
     private static void listarClientes() {
         boolean b = false;
         for (int i = 0; i <= nClientes && !b; i++) {
             if (clientes[i] != null) {
                 ES.escribirLn(clientes[i].toString());
-
+                
             } else {
                 b = true;
             }
         }
     }
-
+    
     private static void listarVehiculos() {
         boolean b = false;
         for (int i = 0; i <= nVehiculos && !b; i++) {
             if (vehiculos[i] != null) {
                 ES.escribirLn(vehiculos[i].toString());
-
+                
             } else {
                 b = true;
             }
         }
     }
-
+    
     private static void listarAlquileres() {
         for (int i = 0; i < nAlquileres; i++) {
             if (alquileres[i] != null) {
@@ -442,7 +432,7 @@ public class JRR_AlquilerVehiculos {
             }
         }
     }
-
+    
     private static Cliente insertarClientes() {
         Cliente c;
         String dni;
@@ -450,7 +440,7 @@ public class JRR_AlquilerVehiculos {
         String nombre;
         String direccion;
         String localidad;
-
+        
         do {
             dni = ES.leerCadena("Introduzca un Dni valido");
         } while (!Utilidades.comprobarDni(dni));
@@ -460,17 +450,17 @@ public class JRR_AlquilerVehiculos {
         do {
             codigoPostal = ES.leerCadena("Introduzca su codigo posta");
         } while (!Utilidades.comprobarCodigoPostal(codigoPostal));
-
+        
         return c = new Cliente(dni, nombre, direccion, localidad, codigoPostal);
     }
-
+    
     private static Vehiculo insertarVehiculo() {
         String matricula;
         Vehiculo v = null;
         do {
             matricula = ES.leerCadena("Introduzca la matricula valido");
         } while (!Utilidades.comprobarMatricula(matricula));
-
+        
         String marca = ES.leerCadena("Introduzca la marca");
         String modelo = ES.leerCadena("Introduzca el modelo");
         int cilindrada = ES.leerEntero("Introduzca el numero de cilindradas");
@@ -490,24 +480,24 @@ public class JRR_AlquilerVehiculos {
                         break;
                     case 2:
                         combustible = Enumerados.TipoCombustible.DIESEL;
-
+                        
                         break;
                     case 3:
                         combustible = Enumerados.TipoCombustible.HIBRIDO;
-
+                        
                         break;
                     case 4:
                         combustible = Enumerados.TipoCombustible.ELECTRICO;
-
+                        
                         break;
                 }
                 opcion = ES.leerInt("Eligee tipo de vehiculo \n 1.Familiar 2.Deportivo", 1, 2);
-
+                
                 switch (opcion) {
                     case 1:
                         int nPlazas = ES.leerInt("Introduzca el numero de plazas", 4, 7);
                         boolean sillaBebe = ES.leerBoolean("Introduzca si quiere solicita la sillla de bebe(si) o no");
-
+                        
                         v = new Familiar(nPlazas, sillaBebe, npuertas, combustible, matricula, marca, modelo, cilindrada);
                         break;
                     case 2:
@@ -520,16 +510,16 @@ public class JRR_AlquilerVehiculos {
                                 break;
                             case 2:
                                 caja = Enumerados.CajaCambio.MANUAL;
-
+                                
                                 break;
                         }
                         v = new Deportivo(descapotable, caja, npuertas, combustible, matricula, marca, modelo, cilindrada);
                         break;
-
+                    
                 }
-
+                
                 break;
-
+            
             case 2:
                 int pma = ES.leerEntero("Introduzca el peso maximo de la furgoneta");
                 int volumen = ES.leerEntero("Introduzca el volumen de la furgoneta");
@@ -542,48 +532,48 @@ public class JRR_AlquilerVehiculos {
                 switch (opcion) {
                     case 1:
                         tamano = Enumerados.Tamano.PEQUENA;
-
+                        
                         break;
                     case 2:
                         tamano = Enumerados.Tamano.MEDIANA;
-
+                        
                         break;
                     case 3:
                         tamano = Enumerados.Tamano.GRANDE;
                         break;
                 }
-
+                
                 v = new Furgoneta(refrigerado, tamano, pma, volumen, matricula, marca, modelo, cilindrada);
                 break;
-
+            
         }
-
+        
         return v;
     }
-
+    
     private static void listarClientesBaja() {
         for (int i = 0; i < nClientes; i++) {
             if (clientes[i] != null) {
                 if (clientes[i].isBaja()) {
                     ES.escribirLn(clientes[i].toString());
-
+                    
                 }
             }
-
+            
         }
     }
-
+    
     private static void listarVehiculosBaja() {
         for (int i = 0; i < nVehiculos; i++) {
             if (vehiculos[i] != null) {
                 if (vehiculos[i].isBaja()) {
                     ES.escribirLn(vehiculos[i].toString());
-
+                    
                 }
             }
         }
     }
-
+    
     public static void guardarAlquilerEnFichero(Alquiler[] a) {
         try {
             try (FileOutputStream fichero = new FileOutputStream("Alquileres.dat")) {
@@ -594,7 +584,7 @@ public class JRR_AlquilerVehiculos {
             System.out.println("Error guardando fichero Alquileres.dat");
         }
     }
-
+    
     public static void guardarVehiculosEnFichero(Vehiculo[] v) {
         try {
             try (FileOutputStream fichero = new FileOutputStream("Vehiculos.dat")) {
@@ -605,7 +595,7 @@ public class JRR_AlquilerVehiculos {
             System.out.println("Error guardando fichero Vehiculos.dat");
         }
     }
-
+    
     public static void guardarClientesEnFichero(Cliente[] c) {
         try {
             try (FileOutputStream fichero = new FileOutputStream("Clientes.dat")) {
@@ -616,7 +606,7 @@ public class JRR_AlquilerVehiculos {
             System.out.println("Error guardando fichero Clientes.dat");
         }
     }
-
+    
     public static Alquiler[] cargarAlquileres() {
         Alquiler[] a = new Alquiler[MAX_ALQUILERES];
         try {
@@ -629,7 +619,7 @@ public class JRR_AlquilerVehiculos {
         }
         return a;
     }
-
+    
     private static Cliente[] cargarClientes() {
         Cliente[] c = new Cliente[MAX_CLIENTES];
         try {
@@ -642,7 +632,7 @@ public class JRR_AlquilerVehiculos {
         }
         return c;
     }
-
+    
     private static Vehiculo[] cargarVehiculos() {
         Vehiculo[] v = new Vehiculo[MAX_VEHICULOS];
         try {
@@ -656,43 +646,100 @@ public class JRR_AlquilerVehiculos {
         return v;
     }
     
-        public static Alquiler[] cargarAlquilerestxt() {
+    public static void leerDatos() {
+        int opcion = ES.leerEntero("Introduce si quiere guerdar los archivos en (1)binario o (2)Fichero txt ");
+        
+        switch (opcion) {
+            case 1:
+                alquileres = cargarAlquileres();
+                vehiculos = cargarVehiculos();
+                clientes = cargarClientes();
+                break;
+            case 2:
+                alquileres = cargarAlquilerestxt();
+                vehiculos = cargarVehiculostxt();
+                clientes = cargarClientestxt();
+                break;
+        }
+        
+    }
+
+    public static Alquiler[] cargarAlquilerestxt() {
         Alquiler[] a = new Alquiler[MAX_ALQUILERES];
         try {
-            try (FileInputStream fichero = new FileInputStream("Alquileres_JRR.dat")) {
+            try (FileInputStream fichero = new FileInputStream("Alquileres_JRR.txt")) {
                 ObjectInputStream entrada = new ObjectInputStream(fichero);
                 a = (Alquiler[]) entrada.readObject();
             }
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error leyendo fichero Alquileres_JRR.dat");
+            System.out.println("Error leyendo fichero Alquileres_JRR.txt");
         }
         return a;
     }
-
+    
     private static Cliente[] cargarClientestxt() {
         Cliente[] c = new Cliente[MAX_CLIENTES];
         try {
-            try (FileInputStream fichero = new FileInputStream("Clientes_JRR.dat")) {
+            try (FileInputStream fichero = new FileInputStream("Clientes_JRR.txt")) {
                 ObjectInputStream entrada = new ObjectInputStream(fichero);
                 c = (Cliente[]) entrada.readObject();
             }
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error leyendo fichero Clientes_JRR.dat");
+            System.out.println("Error leyendo fichero Clientes_JRR.txt");
         }
         return c;
     }
-
+    
     private static Vehiculo[] cargarVehiculostxt() {
         Vehiculo[] v = new Vehiculo[MAX_VEHICULOS];
-        try {
-            try (FileInputStream fichero = new FileInputStream("Vehiculos_JRR.dat")) {
+        try 
+       {
+            try (FileInputStream fichero = new FileInputStream("Vehiculos_JRR.txt")) {
                 ObjectInputStream entrada = new ObjectInputStream(fichero);
                 v = (Vehiculo[]) entrada.readObject();
             }
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error leyendo fichero Vehiculos_JRR.dat");
+            System.out.println("Error leyendo fichero Vehiculos_JRR.txt");
         }
         return v;
+    }
+    
+    public static void guardarDatos() {
+         int opcion = ES.leerEntero("Introduce si quiere guerdar los archivos en (1)binario o (2)Fichero txt ");
+        
+        switch (opcion) {
+            case 1:
+              guardarAlquilerEnFichero(alquileres);
+           guardarClientesEnFichero(clientes);
+       guardarVehiculosEnFichero(vehiculos);
+                
+            
+                break;
+            case 2:
+                boolean b= ES.leerBoolean("Desea sobreescribir los ficheros  de txt?");
+                String linea= null;
+                        for (int i = 0; i < nAlquileres; i++) {
+                    linea+= alquileres[i].toString()+"";
+                }
+                              
+                ES.escribirArchivo("Alquiler_JRR.txt", linea ,b );
+                
+                 linea= null;
+                        for (int i = 0; i < nClientes; i++) {
+                    linea+= clientes[i].toString()+"";
+                }
+                              
+                ES.escribirArchivo("Clientes_JRR.txt", linea ,b );
+                 linea= null;
+                        for (int i = 0; i < nVehiculos ; i++) {
+                    linea+= vehiculos[i].toString()+"";
+                }
+                              
+                ES.escribirArchivo("Vehiculos_JRR.txt", linea ,b );
+                
+                break;
+        }
+       
     }
     
 }

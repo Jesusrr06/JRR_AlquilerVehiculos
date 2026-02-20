@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -157,22 +158,72 @@ public class ES {
 
         try {
 
-            FileWriter fichero = new FileWriter(ruta);
-            BufferedWriter bw = new BufferedWriter(fichero);
+            Scanner scanner = new Scanner(System.in);
+            File archivo = new File("datos.txt");
 
-            bw.write(linea);
+            System.out.print("Escribe el texto que quieres guardar: ");
+            String texto = scanner.nextLine();
 
-            bw.close();
+            try {
 
-        } catch (Exception e) {
+                if (archivo.exists()) {
+                    System.out.print("El archivo ya existe. ¿Quieres sobreescribirlo? (s/n): ");
+                    String respuesta = scanner.nextLine().toLowerCase();
+
+                    if (respuesta.equals("s")) {
+                        FileWriter writer = new FileWriter(archivo, true); // Sobrescribe
+                        writer.write(texto + "\n");
+                        writer.close();
+                        System.out.println("Archivo sobreescrito correctamente.");
+                    } else {
+                        FileWriter writer = new FileWriter(archivo, false); // Añade
+                        writer.write(texto + "\n");
+                        writer.close();
+                        System.out.println("Datos añadidos correctamente.");
+                    }
+
+                } else {
+                    FileWriter writer = new FileWriter(archivo);
+                    writer.write(texto + "\n");
+                    writer.close();
+                    System.out.println("Archivo creado y datos guardados correctamente.");
+                }
+
+            } catch (IOException e) {
+                System.out.println("Error al escribir en el archivo.");
+            }
+
+            scanner.close();
+        } catch (Error e) {
+            System.out.println(e);
         }
-
-        return true;
+        return false;
     }
 
-    public static void leerArchivo() {
-        String ruta = "C:../fichero_JRR.txt";
+    public static String leerArchivo() {
+        String datos = null;
+        File archivo = new File("datos.txt");
 
+        if (!archivo.exists()) {
+            System.out.println("El archivo no existe.");
+            return "";
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+
+            String linea;
+            System.out.println("Contenido del archivo:");
+            System.out.println("----------------------");
+
+            while ((linea = br.readLine()) != null) {
+                System.out.println(linea);
+                datos += linea + "\n";
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo.");
+        }
+        return datos;
     }
 
 }

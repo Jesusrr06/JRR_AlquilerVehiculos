@@ -64,18 +64,18 @@ public abstract class Vehiculo implements Serializable{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("matricula=").append(matricula);
-        sb.append("\n");
-        sb.append(", marca=").append(marca);
-                sb.append("\n");
+        sb.append("").append(matricula);
+        sb.append("#");
+        sb.append("").append(marca);
+                sb.append("#");
 
-        sb.append(", modelo=").append(modelo);
-        sb.append("\n");
-        sb.append(", cilindrada=").append(cilindrada);
-        sb.append("\n");
-        sb.append(", disponible=").append(disponible);
-        sb.append("\n");
-        sb.append(", baja=").append(baja);
+        sb.append("").append(modelo);
+        sb.append("#");
+        sb.append("#").append(cilindrada);
+        sb.append("#");
+        sb.append("").append(disponible);
+        sb.append("#");
+        sb.append("#").append(baja);
         return sb.toString();
     }
 

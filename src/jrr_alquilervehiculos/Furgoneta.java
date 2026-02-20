@@ -37,9 +37,9 @@ public class Furgoneta extends Mercancias {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(super.toString());
-        sb.append("refrigerado=").append(refrigerado);
-        sb.append(", tamanio=").append(tamanio);
-        sb.append('}');
+        sb.append("").append(refrigerado);
+        sb.append("#").append(tamanio);
+        sb.append("#\n");
         return sb.toString();
     }
 
