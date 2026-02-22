@@ -26,6 +26,7 @@ public class Alquiler implements Serializable {
     public Alquiler(Cliente cliente, Vehiculo turismo) {
         this.cliente = cliente;
         this.turismo = turismo;
+        this.fecha= LocalDateTime.now();
         
     }
     
