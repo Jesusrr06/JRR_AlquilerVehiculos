@@ -1,0 +1,2 @@
+[1234ABC#Toyota#v12##12#true##false4#DIESEL#true#AUTOMATICA#
+, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]

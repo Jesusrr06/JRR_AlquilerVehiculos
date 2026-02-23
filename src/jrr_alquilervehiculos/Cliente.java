@@ -78,7 +78,7 @@ public class Cliente implements Serializable {
         sb.append("").append(codigoPostal);
         sb.append("#");
 
-        sb.append(baja).append("#\n");
+        sb.append(baja).append("#");
         return sb.toString();
     }
 
@@ -99,7 +99,7 @@ public class Cliente implements Serializable {
         sb.append("\n");
 
         sb.append(", codigoPostal=").append(codigoPostal);
-        sb.append("\n");
+        sb.append("");
         sb.append("baja:").append(baja);
 
         return sb.toString();

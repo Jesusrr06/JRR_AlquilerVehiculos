@@ -1,0 +1,4 @@
+[30.0#2026-02-23T20:24:53.542699#1#1234ABC#Toyota#v12##12#true##false4#DIESEL#true#AUTOMATICA#
+#49526422Q#j#12#12#41702#false#
+# 
+, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]

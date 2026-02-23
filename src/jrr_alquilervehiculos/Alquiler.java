@@ -72,7 +72,7 @@ public class Alquiler implements Serializable {
         sb.append("#").append(dias);
         sb.append("#").append(turismo);
         sb.append("#").append(cliente);
-        sb.append("# \n");
+        sb.append("");
         return sb.toString();
     }
     

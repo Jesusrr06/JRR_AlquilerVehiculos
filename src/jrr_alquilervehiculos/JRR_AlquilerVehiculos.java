@@ -139,20 +139,21 @@ public class JRR_AlquilerVehiculos {
                             break;
                         case 2:
                             String linea = Arrays.toString(clientes);
-                            String ruta = ES.leerCadena("Introduce el nombre del archivo de Clientes.txt");
+                            String ruta = ES.leerCadena("Introduce el nombre del archivo de Clientes");
                             boolean b = ES.leerBoolean("Desea sobreescribir el archivo?");
                             ES.escribirArchivo(ruta, linea, b);
 
                             linea= null;
                             linea = Arrays.toString(vehiculos);
 
-                            ruta = ES.leerCadena("Introduce el nombre del archivo de Vehiuclos.txt");
+                            ruta = ES.leerCadena("Introduce el nombre del archivo de Vehiuclos");
                             b = ES.leerBoolean("Desea sobreescribir el archivo?");
                             ES.escribirArchivo(ruta, linea, b);
 
                             linea = Arrays.toString(alquileres);
-                            ruta = ES.leerCadena("Introduce el nombre del archivo de Alquileres.txt");
+                            ruta = ES.leerCadena("Introduce el nombre del archivo de Alquileres");
                             b = ES.leerBoolean("Desea sobreescribir el archivo?");
+                            
                             ES.escribirArchivo(ruta, linea, b);
                             break;
 
@@ -729,6 +730,7 @@ public class JRR_AlquilerVehiculos {
                 }
 
                 ES.escribirArchivo("Alquiler_JRR.txt", linea, b);
+                
 
                 linea = null;
                 for (int i = 0; i < nClientes; i++) {
