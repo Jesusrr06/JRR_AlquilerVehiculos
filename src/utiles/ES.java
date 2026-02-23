@@ -161,7 +161,7 @@ public class ES {
 
             Scanner scanner = new Scanner(System.in);
             File archivo = new File("C:\\" + ruta);
-
+            BufferedWriter br= new  BufferedWriter();
             try {
                 PrintWriter salida = new PrintWriter(new FileWriter(archivo, sobreescribirArchivo));
 
