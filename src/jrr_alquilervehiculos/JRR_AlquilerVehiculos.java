@@ -143,6 +143,7 @@ public class JRR_AlquilerVehiculos {
                             boolean b = ES.leerBoolean("Desea sobreescribir el archivo?");
                             ES.escribirArchivo(ruta, linea, b);
 
+                            linea= null;
                             linea = Arrays.toString(vehiculos);
 
                             ruta = ES.leerCadena("Introduce el nombre del archivo de Vehiuclos.txt");
@@ -388,8 +389,8 @@ public class JRR_AlquilerVehiculos {
         for (int i = 0; i < MAX_ALQUILERES; i++) {
             if (alquileres[i] != null) {
                 if (alquileres[i].getCliente().equals(c) && alquileres[i].getTurismo().equals(v)) {
+                  alquileres[i].toString();
                     alquileres[i].cerrar();
-                    nAlquileres--;
 
                 }
             }
@@ -751,9 +752,9 @@ public class JRR_AlquilerVehiculos {
 
         switch (opcion) {
             case 1:
-           cargarAlquileres();
-           cargarClientes();
-           cargarVehiculos();
+        alquileres=   cargarAlquileres();
+         clientes  =cargarClientes();
+         vehiculos=  cargarVehiculos();
 
                 break;
             case 2:

@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 /**
@@ -159,32 +160,21 @@ public class ES {
         try {
 
             Scanner scanner = new Scanner(System.in);
-            File archivo = new File("datos.txt");
-
-            System.out.print("Escribe el texto que quieres guardar: ");
-            String texto = scanner.nextLine();
+            File archivo = new File("C:\\" + ruta);
 
             try {
+                PrintWriter salida = new PrintWriter(new FileWriter(archivo, sobreescribirArchivo));
 
                 if (archivo.exists()) {
-                    System.out.print("El archivo ya existe. ¿Quieres sobreescribirlo? (s/n): ");
-                    String respuesta = scanner.nextLine().toLowerCase();
+                    salida.println(linea);
+salida.close();
+                    System.out.println("Archivo sobreescrito correctamente.");
 
-                    if (respuesta.equals("s")) {
-                        FileWriter writer = new FileWriter(archivo, true); // Sobrescribe
-                        writer.write(texto + "\n");
-                        writer.close();
-                        System.out.println("Archivo sobreescrito correctamente.");
-                    } else {
-                        FileWriter writer = new FileWriter(archivo, false); // Añade
-                        writer.write(texto + "\n");
-                        writer.close();
-                        System.out.println("Datos añadidos correctamente.");
-                    }
+                    System.out.println("Datos añadidos correctamente.");
 
                 } else {
                     FileWriter writer = new FileWriter(archivo);
-                    writer.write(texto + "\n");
+                    writer.write(linea + "\n");
                     writer.close();
                     System.out.println("Archivo creado y datos guardados correctamente.");
                 }
@@ -200,9 +190,9 @@ public class ES {
         return false;
     }
 
-    public static String leerArchivo() {
+    public static String leerArchivo(String ruta) {
         String datos = null;
-        File archivo = new File("datos.txt");
+        File archivo = new File("C:\\" + ruta);
 
         if (!archivo.exists()) {
             System.out.println("El archivo no existe.");

@@ -67,8 +67,7 @@ public class Alquiler implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("").append(FORMATO_FECHA);
-        sb.append("#").append(PRECIO_DIA);
+        sb.append("").append(PRECIO_DIA);
         sb.append("#").append(fecha);
         sb.append("#").append(dias);
         sb.append("#").append(turismo);

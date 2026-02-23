@@ -32,7 +32,7 @@ public abstract class Turismo extends Vehiculo {
         sb.append("").append(npuertas);
         sb.append("#");
         sb.append("").append(combustible);
-        sb.append("#\n");
+        sb.append("#");
         return sb.toString();
     }
 
