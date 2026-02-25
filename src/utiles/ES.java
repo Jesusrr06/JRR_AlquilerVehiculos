@@ -7,13 +7,10 @@ package utiles;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Scanner;
-import jrr_alquilervehiculos.Alquiler;
 
 /**
  *
@@ -157,128 +154,55 @@ public class ES {
     }
 
     public static boolean escribirArchivo(String ruta, String linea, boolean sobreescribirArchivo) {
-
+        File archivo = new File(ruta);
+        BufferedWriter bw = null;
         try {
-
-            File archivo = new File(ruta);
-            try {
-                BufferedWriter br = new BufferedWriter(new FileWriter(archivo, sobreescribirArchivo));
-
-                if (archivo.exists()) {
-                    br.write(linea);
-                    br.close();
-                    System.out.println("Archivo sobreescrito correctamente.");
-
-                    System.out.println("Datos añadidos correctamente.");
-
-                } else {
-                    br = new BufferedWriter(new FileWriter(archivo));
-
-                    br.write(linea + "\n");
-                    br.close();
-                    System.out.println("Archivo creado y datos guardados correctamente.");
-                }
-
-            } catch (IOException e) {
-                System.out.println("Error al escribir en el archivo.");
+            File parent = archivo.getParentFile();
+            if (parent != null && !parent.exists()) {
+                parent.mkdirs();
             }
 
-        } catch (Error e) {
-            System.out.println(e);
+            bw = new BufferedWriter(new FileWriter(archivo, !sobreescribirArchivo));
+            bw.write(linea);
+            if (!linea.endsWith(System.lineSeparator())) {
+                bw.newLine();
+            }
+            bw.flush();
+            System.out.println("Datos escritos correctamente en: " + ruta);
+            return true;
+        } catch (IOException e) {
+            System.out.println("Error al escribir en el archivo: " + e.getMessage());
+            return false;
+        } finally {
+            if (bw != null) {
+                try {
+                    bw.close();
+                } catch (IOException ignored) {
+                }
+            }
         }
-        return false;
     }
 
     public static String leerArchivo(String ruta) {
-        String datos = null;
-             FileReader fichero;
-        BufferedReader br = null;
-try {
-            fichero = new FileReader(ruta);
-            br = new BufferedReader(fichero);
-            String linea = br.readLine();
-            while (linea != null) {
-      
-                   
-                
-                linea = br.readLine();
-            }
-            br.close();
-        } catch (IOException e) {
-            System.out.println("Error abriendo fichero: " + ruta);
+        File archivo = new File(ruta);
+        if (!archivo.exists()) {
+            System.out.println("El archivo no existe: " + ruta);
+            return null;
         }
 
-       
-
-        try {
-
-            String linea=null;
-            System.out.println("Contenido del archivo:");
-            System.out.println("----------------------");
-
+        StringBuilder datos = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+            String linea;
             while ((linea = br.readLine()) != null) {
-                System.out.println(linea);
-                datos += linea + "\n";
+                datos.append(linea).append(System.lineSeparator());
             }
-
         } catch (IOException e) {
-            System.out.println("Error al leer el archivo.");
+            System.out.println("Error al leer el archivo: " + e.getMessage());
+            return null;
         }
-        return datos;
+        return datos.toString();
     }
     
-     public void cargarAlquilerestxt(String nombreF) {
-        FileReader fichero;
-        BufferedReader br;
-jrr_alquilervehiculos.Alquiler v;
-        try {
-            fichero = new FileReader(nombreF);
-            br = new BufferedReader(fichero);
-            String linea = br.readLine();
-            while (linea != null) {
-                v= crearalquiler(linea);
-                    // Lo inserta si no está ya en el ArrayList
-                    
-                
-                linea = br.readLine();
-            }
-            br.close();
-        } catch (IOException e) {
-            System.out.println("Error abriendo fichero: " + nombreF);
-        }
-
-    }
-public jrr_alquilervehiculos.Alquiler crearalquiler (String linea) {
-        jrr_alquilervehiculos.Alquiler nuevoAl = null;
-        // Objeto Scanner separado por ";"
-        Scanner s = new Scanner(linea).useDelimiter("#");
-        // Datos comunes (los del padre)
-        double PRECIO_DIA=s.nextDouble();
-String tiempo= s.next();
-        int dias = s.nextInt();
-        String matricula = s.next();
-        String marca = s.next();
-                String modelo = s.next();
-        int cilindrda = s.nextInt();
-        boolean disponible = s.nextBoolean();
-if( s.match(jrr_alquilervehiculos.Familiar.))
-        jrr_alquilervehiculos.Vehiculo turismo  =  new 
-        boolean conPatron = s.next().equals("S");
-        boolean alquilado = s.next().equals("S");
-        int diasNavegacion = s.nextInt();
-        int diasAlquiler = s.nextInt();
-        // Discriminamos según sea Lancha o Velero
-        if (tipo.equals("L")) {
-            // Atributos propios de Lancha
-            float potencia = Float.parseFloat(s.next());
-            // creamos Lancha
-            nuevoAl = new Alquiler(cliente, turismo);
-        } else if (tipo.equals("V")) {
-
-            
-        }
     
-        return nuevoAl;
-    }
 
 }

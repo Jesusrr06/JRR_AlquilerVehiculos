@@ -71,11 +71,11 @@ public abstract class Vehiculo implements Serializable{
 
         sb.append("").append(modelo);
         sb.append("#");
-        sb.append("#").append(cilindrada);
+        sb.append("").append(cilindrada);
         sb.append("#");
         sb.append("").append(disponible);
         sb.append("#");
-        sb.append("#").append(baja);
+        sb.append("").append(baja);
         return sb.toString();
     }
 

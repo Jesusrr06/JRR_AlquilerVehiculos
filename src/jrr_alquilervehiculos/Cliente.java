@@ -78,7 +78,7 @@ public class Cliente implements Serializable {
         sb.append("").append(codigoPostal);
         sb.append("#");
 
-        sb.append(baja).append("#");
+        sb.append(baja).append("");
         return sb.toString();
     }
 

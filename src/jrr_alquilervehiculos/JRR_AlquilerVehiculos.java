@@ -6,10 +6,16 @@ package jrr_alquilervehiculos;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
+import jrr_alquilervehiculos.Alquiler;
+import jrr_alquilervehiculos.Vehiculo;
 import utiles.ES;
 import utiles.Utilidades;
 
@@ -28,11 +34,11 @@ public class JRR_AlquilerVehiculos {
     private final static int MAX_VEHICULOS = 50;
     private static int nVehiculos = 0;
 
-    private static Vehiculo[] vehiculos = new Vehiculo[MAX_VEHICULOS];
+    private static ArrayList<Vehiculo> vehiculos = new ArrayList<>();
 
-    private static Cliente[] clientes = new Cliente[MAX_CLIENTES];
+    private static ArrayList<Cliente> clientes = new ArrayList<>();
 
-    private static Alquiler[] alquileres = new Alquiler[MAX_ALQUILERES];
+    private static ArrayList<Alquiler> alquileres = new ArrayList<>();
 
     /**
      * @param args the command line arguments
@@ -129,47 +135,20 @@ public class JRR_AlquilerVehiculos {
 
                     break;
                 case 12:
-                    opcion = ES.leerEntero("Introduce si quiere guerdar los archivos en (1)binario o (2)Fichero txt ");
-
-                    switch (opcion) {
-                        case 1:
-                            guardarAlquilerEnFichero(alquileres);
-                            guardarClientesEnFichero(clientes);
-                            guardarVehiculosEnFichero(vehiculos);
-                            break;
-                        case 2:
-                            String linea = Arrays.toString(clientes);
-                            String ruta = ES.leerCadena("Introduce el nombre del archivo de Clientes");
-                            boolean b = ES.leerBoolean("Desea sobreescribir el archivo?");
-                            ES.escribirArchivo(ruta, linea, b);
-
-                            linea= null;
-                            linea = Arrays.toString(vehiculos);
-
-                            ruta = ES.leerCadena("Introduce el nombre del archivo de Vehiuclos");
-                            b = ES.leerBoolean("Desea sobreescribir el archivo?");
-                            ES.escribirArchivo(ruta, linea, b);
-
-                            linea = Arrays.toString(alquileres);
-                            ruta = ES.leerCadena("Introduce el nombre del archivo de Alquileres");
-                            b = ES.leerBoolean("Desea sobreescribir el archivo?");
-                            
-                            ES.escribirArchivo(ruta, linea, b);
-                            break;
-
-                    }
+                    guardarDatos();
                     break;
-                case 13:
+
+            
+            
+          case 13:
                     CargarDatos();
 
                     break;
                 default:
-
-            }
-
-        } while (opcion != 0);
-
-    }
+}
+            }while (opcion != 0);
+    
+        }
 
     public static void menu() {
         ES.escribirLn("1.anadir cliente.");
@@ -193,27 +172,32 @@ public class JRR_AlquilerVehiculos {
     }
 
     private static Cliente getClientes(String dnic) {
-        for (int i = 0; i <= nClientes; i++) {
-            if (clientes[i] == null) {
-                return null;
-            } else if (clientes[i].getDni().equals(dnic)) {
-                return clientes[i];
+        for (Cliente c : clientes) {
+            
+         if (c.getDni().equals(dnic)) {
+                return c;
 
             }
-        }
+        
 
+                  return null;
+
+        }
         return null;
     }
 
+    
+
     private static Vehiculo getVehiculos(String m) {
-        for (int i = 0; i <= nVehiculos; i++) {
-            if (vehiculos[i] == null) {
-                return null;
-            } else if (vehiculos[i].getMatricula().equals(m)) {
-                return vehiculos[i];
+        for (Vehiculo v : vehiculos) {
+                   if (v.getMatricula().equals(m)) {
+                return v;
 
             }
+
         }
+ 
+        
 
         return null;
     }
@@ -390,7 +374,7 @@ public class JRR_AlquilerVehiculos {
         for (int i = 0; i < MAX_ALQUILERES; i++) {
             if (alquileres[i] != null) {
                 if (alquileres[i].getCliente().equals(c) && alquileres[i].getTurismo().equals(v)) {
-                  alquileres[i].toString();
+                    alquileres[i].toString();
                     alquileres[i].cerrar();
 
                 }
@@ -573,10 +557,9 @@ public class JRR_AlquilerVehiculos {
         }
     }
 
-    public static void guardarAlquilerEnFichero(Alquiler[] a) {
+    public static void guardarAlquilerEnFichero(ArrayList<Alquiler> a) {
         try {
-            try (FileOutputStream fichero = new FileOutputStream("Alquileres_JRR.dat")) {
-                ObjectOutputStream salida = new ObjectOutputStream(fichero);
+            try (FileOutputStream fichero = new FileOutputStream("Alquileres_JRR.dat"); ObjectOutputStream salida = new ObjectOutputStream(fichero)) {
                 salida.writeObject(a);
                 System.out.println("Guardado con exito");
             }
@@ -585,20 +568,20 @@ public class JRR_AlquilerVehiculos {
         }
     }
 
-    public static void guardarVehiculosEnFichero(Vehiculo[] v) {
+    public static void guardarVehiculosEnFichero(ArrayList<Vehiculo> v) {
         try {
             try (FileOutputStream fichero = new FileOutputStream("Vehiculos_JRR.dat")) {
                 ObjectOutputStream salida = new ObjectOutputStream(fichero);
                 salida.writeObject(v);
                 System.out.println("Cargado con exito");
-
+                salida.close();
             }
         } catch (IOException e) {
             System.out.println("Error guardando fichero Vehiculos.dat");
         }
     }
 
-    public static void guardarClientesEnFichero(Cliente[] c) {
+    public static void guardarClientesEnFichero(ArrayList<Cliente> c) {
         try {
             try (FileOutputStream fichero = new FileOutputStream("Clientes_JRR.dat")) {
                 ObjectOutputStream salida = new ObjectOutputStream(fichero);
@@ -630,6 +613,7 @@ public class JRR_AlquilerVehiculos {
             try (FileInputStream fichero = new FileInputStream("Clientes_JRR.dat")) {
                 ObjectInputStream entrada = new ObjectInputStream(fichero);
                 c = (Cliente[]) entrada.readObject();
+                nClientes = c.length;
                 System.out.println("Cargado con exito");
 
             }
@@ -645,6 +629,8 @@ public class JRR_AlquilerVehiculos {
             try (FileInputStream fichero = new FileInputStream("Vehiculos_JRR.dat")) {
                 ObjectInputStream entrada = new ObjectInputStream(fichero);
                 v = (Vehiculo[]) entrada.readObject();
+                nVehiculos = v.length;
+
                 System.out.println("Cargado con exito");
 
             }
@@ -705,6 +691,8 @@ public class JRR_AlquilerVehiculos {
             try (FileInputStream fichero = new FileInputStream("Vehiculos_JRR.txt")) {
                 ObjectInputStream entrada = new ObjectInputStream(fichero);
                 v = (Vehiculo[]) entrada.readObject();
+                nVehiculos = v.length;
+
             }
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error leyendo fichero Vehiculos_JRR.txt");
@@ -724,24 +712,15 @@ public class JRR_AlquilerVehiculos {
                 break;
             case 2:
                 boolean b = ES.leerBoolean("Desea sobreescribir los ficheros  de txt?");
-                String linea = null;
-                for (int i = 0; i < nAlquileres; i++) {
-                    linea += alquileres[i].toString() + "";
-                }
 
-                ES.escribirArchivo("Alquiler_JRR.txt", linea, b);
-                
+                String linea = convertirdatosAString();
 
-                linea = null;
-                for (int i = 0; i < nClientes; i++) {
-                    linea += clientes[i].toString() + "";
-                }
+                ES.escribirArchivo("Alquileres_JRR.txt", linea, b);
 
+                linea = convertirdatosCString();
                 ES.escribirArchivo("Clientes_JRR.txt", linea, b);
-                linea = null;
-                for (int i = 0; i < nVehiculos; i++) {
-                    linea += vehiculos[i].toString() + "";
-                }
+
+                linea = convertirdatosVString();
 
                 ES.escribirArchivo("Vehiculos_JRR.txt", linea, b);
 
@@ -749,22 +728,65 @@ public class JRR_AlquilerVehiculos {
         }
     }
 
+    public static String convertirdatosCString() {
+        if (clientes[0] != null) {
+            String linea = clientes[0].toString();
+
+            for (int i = 1; i < nClientes; i++) {
+                if (clientes[i] == null) {
+                    return linea;
+                }
+                linea += clientes[i].toString() + "\n";
+            }
+            return linea;
+        }
+        return null;
+    }
+
+    public static String convertirdatosVString() {
+        if (vehiculos[0] != null) {
+            String linea = vehiculos[0].toString();
+
+            for (int i = 1; i < nVehiculos; i++) {
+                if (vehiculos[i] == null) {
+                    return linea;
+                }
+                linea += vehiculos[i].toString() + "\n";
+            }
+            return linea;
+        }
+        return null;
+    }
+
+    public static String convertirdatosAString() {
+        if (alquileres[0] != null) {
+            String linea = alquileres[0].toString();
+
+            for (int i = 1; i < nAlquileres; i++) {
+                if (alquileres[i] == null) {
+                    return linea;
+                }
+                linea += alquileres[i].toString() + "\n";
+            }
+            return linea;
+        }
+        return null;
+    }
+
     public static void CargarDatos() {
         int opcion = ES.leerEntero("Introduce si quiere guerdar los archivos en (1)binario o (2)Fichero txt ");
 
         switch (opcion) {
             case 1:
-        alquileres=   cargarAlquileres();
-         clientes  =cargarClientes();
-         vehiculos=  cargarVehiculos();
+                alquileres = cargarAlquileres();
+                clientes = cargarClientes();
+                vehiculos = cargarVehiculos();
 
                 break;
             case 2:
-          cargarAlquilerestxt();
-          cargarClientestxt();
-          cargarVehiculostxt();
-
-
+                cargarAlquilerestxt();
+                cargarClientestxt();
+                cargarVehiculostxt();
 
                 break;
         }
