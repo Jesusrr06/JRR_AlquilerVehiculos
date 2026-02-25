@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import utiles.ES;
 
 /**
  *
@@ -29,6 +30,12 @@ public class Alquiler implements Serializable {
         this.fecha= LocalDateTime.now();
         
     }
+      
+
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
+    }
+    
     
     public Cliente getCliente() {
         return cliente;
@@ -60,8 +67,10 @@ public class Alquiler implements Serializable {
     
     public void cerrar() {
         this.getTurismo().setDisponible(true);
-        
-        this.dias = diferenciaDias(this.fecha) + 1;
+        double precioal=  this.precioAlquiler();
+        this.dias = diferenciaDias(this.fecha) + 1;  
+        ES.escribir("Su alquiler sale a " +  precioal);
+
     }
     
     @Override
@@ -76,4 +85,12 @@ public class Alquiler implements Serializable {
         return sb.toString();
     }
     
+      public String toString2() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("#").append(fecha);
+        sb.append("#").append(turismo.getMatricula());
+        sb.append("#").append(cliente.getDni());
+        sb.append("");
+        return sb.toString();
+    }
 }

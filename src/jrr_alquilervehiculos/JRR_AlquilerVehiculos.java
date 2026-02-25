@@ -9,7 +9,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Scanner;
 import utiles.ES;
 import utiles.Utilidades;
 
@@ -18,6 +20,10 @@ import utiles.Utilidades;
  * @author Jesus
  */
 public class JRR_AlquilerVehiculos {
+
+    private final static String ruta_A = "\\Alquileres_JRR.txt";
+    private final static String ruta_V = "Vehiculos_JRR.txt";
+    private final static String ruta_C = "Clientes_JRR.txt";
 
     private final static int MAX_ALQUILERES = 50;
     private static int nAlquileres = 0;
@@ -129,35 +135,7 @@ public class JRR_AlquilerVehiculos {
 
                     break;
                 case 12:
-                    opcion = ES.leerEntero("Introduce si quiere guerdar los archivos en (1)binario o (2)Fichero txt ");
-
-                    switch (opcion) {
-                        case 1:
-                            guardarAlquilerEnFichero(alquileres);
-                            guardarClientesEnFichero(clientes);
-                            guardarVehiculosEnFichero(vehiculos);
-                            break;
-                        case 2:
-                            String linea = Arrays.toString(clientes);
-                            String ruta = ES.leerCadena("Introduce el nombre del archivo de Clientes");
-                            boolean b = ES.leerBoolean("Desea sobreescribir el archivo?");
-                            ES.escribirArchivo(ruta, linea, b);
-
-                            linea= null;
-                            linea = Arrays.toString(vehiculos);
-
-                            ruta = ES.leerCadena("Introduce el nombre del archivo de Vehiuclos");
-                            b = ES.leerBoolean("Desea sobreescribir el archivo?");
-                            ES.escribirArchivo(ruta, linea, b);
-
-                            linea = Arrays.toString(alquileres);
-                            ruta = ES.leerCadena("Introduce el nombre del archivo de Alquileres");
-                            b = ES.leerBoolean("Desea sobreescribir el archivo?");
-                            
-                            ES.escribirArchivo(ruta, linea, b);
-                            break;
-
-                    }
+                    guardarDatos();
                     break;
                 case 13:
                     CargarDatos();
@@ -390,7 +368,7 @@ public class JRR_AlquilerVehiculos {
         for (int i = 0; i < MAX_ALQUILERES; i++) {
             if (alquileres[i] != null) {
                 if (alquileres[i].getCliente().equals(c) && alquileres[i].getTurismo().equals(v)) {
-                  alquileres[i].toString();
+                    alquileres[i].toString();
                     alquileres[i].cerrar();
 
                 }
@@ -466,7 +444,7 @@ public class JRR_AlquilerVehiculos {
         int opcion = ES.leerInt("Eligee tipo de vehiculo \n 1.Turismo 2.Mercancias", 1, 2);
         switch (opcion) {
             case 1:
-                int npuertas = ES.leerEntero("Introduce el numero de puertas");
+                int npuertas = ES.leerEntero("Introduce el numero de puertas\n");
                 opcion = ES.leerInt("Elije el tipo de combustible"
                         + "1.Gasolina \n"
                         + "2.Diesel\n"
@@ -490,7 +468,7 @@ public class JRR_AlquilerVehiculos {
 
                         break;
                 }
-                opcion = ES.leerInt("Eligee tipo de vehiculo \n 1.Familiar 2.Deportivo", 1, 2);
+                opcion = ES.leerInt("Eligee tipo de vehiculo \n 1.Familiar \n 2.Deportivo \n", 1, 2);
 
                 switch (opcion) {
                     case 1:
@@ -501,7 +479,7 @@ public class JRR_AlquilerVehiculos {
                         break;
                     case 2:
                         boolean descapotable = ES.leerBoolean("introduzca si quiere que sea Descapotable(si) o no");
-                        opcion = ES.leerInt("Elija si quiere que sea 1.Automatico o 2.Manual", 1, 2);
+                        opcion = ES.leerInt("Elija si quiere que sea \n 1.Automatico o 2.Manual", 1, 2);
                         Enumerados.CajaCambio caja = null;
                         switch (opcion) {
                             case 1:
@@ -524,10 +502,10 @@ public class JRR_AlquilerVehiculos {
                 int volumen = ES.leerEntero("Introduzca el volumen de la furgoneta");
                 boolean refrigerado = ES.leerBoolean("Introduzca si es refrigerado o no");
                 Enumerados.Tamano tamano = null;
-                opcion = ES.leerInt("Introduzca el tamanio de la furgoneta"
+                opcion = ES.leerInt("Introduzca el tamanio de la furgoneta \n"
                         + "1.Pequena"
                         + "2.Mediana"
-                        + "3.Grande", 1, 3);
+                        + "3.Grande \n", 1, 3);
                 switch (opcion) {
                     case 1:
                         tamano = Enumerados.Tamano.PEQUENA;
@@ -672,18 +650,94 @@ public class JRR_AlquilerVehiculos {
 
     }
 
-    public static Alquiler[] cargarAlquilerestxt() {
-        Alquiler[] a = new Alquiler[MAX_ALQUILERES];
+    public static boolean cargarAlquilerestxt() {
+        Alquiler a;
+        Cliente c;
+        Vehiculo v;
+        int i = 0;
+        String linea = ES.leerArchivo(ruta_A);
         try {
-            try (FileInputStream fichero = new FileInputStream("Alquileres_JRR.txt")) {
-                ObjectInputStream entrada = new ObjectInputStream(fichero);
-                a = (Alquiler[]) entrada.readObject();
+            Scanner s = new Scanner(linea).useDelimiter("#");
+            while (linea != null) {
+                LocalDateTime fecha = leerfecha(s);
+                String dni = s.next();
+                String matricula = s.next();
+
+                c = getClientes(dni);
+                v = getVehiculos(matricula);
+                a = new Alquiler(c, v);
+                a.setFecha(fecha);
+                alquileres[i] = a;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean cargarClientestxt() {
+        Cliente c;
+        int i = 0;
+        String linea = ES.leerArchivo(ruta_C);
+        try {
+            Scanner s = new Scanner(linea).useDelimiter("#");
+            while (linea != null) {
+                String dni = s.next();
+                String nombre = s.next();
+                String direccion = s.next();
+                String localidad = s.next();
+                String codPostal = s.next();
+                boolean baja = s.nextBoolean();
+                c = new Cliente(dni, nombre, direccion, localidad, codPostal, baja);
 
             }
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error leyendo fichero Alquileres_JRR.txt");
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
         }
-        return a;
+        return true;
+    }
+
+    public static boolean cargarVehiculosstxt() {
+        Vehiculo v;
+        int i = 0;
+        String linea = ES.leerArchivo(ruta_V);
+        try {
+            Scanner s = new Scanner(linea).useDelimiter("#");
+            while (linea != null) {
+                String matricula = s.next();
+                String marca = s.next();
+                String modelo = s.next();
+                int cilindrada = s.nextInt();
+                boolean disponible = s.nextBoolean();
+                boolean baja = s.nextBoolean();
+                int numpOpma= s.nextInt();
+                if(s.next() instanceof ){
+                
+                
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
+    }
+
+    public static LocalDateTime leerfecha(Scanner s) {
+        int anio = s.nextInt();
+        int mes = s.nextInt();
+        int dia = s.nextInt();
+        int hora = s.nextInt();
+        int minuto = s.nextInt();
+        int segundo = s.nextInt();
+        int microsegundos = s.nextInt();
+        LocalDateTime fecha;
+        fecha = LocalDateTime.of(dia, minuto, minuto, hora, minuto, segundo, microsegundos);
+
+        return fecha;
+
     }
 
     private static Cliente[] cargarClientestxt() {
@@ -724,29 +778,50 @@ public class JRR_AlquilerVehiculos {
                 break;
             case 2:
                 boolean b = ES.leerBoolean("Desea sobreescribir los ficheros  de txt?");
-                String linea = null;
-                for (int i = 0; i < nAlquileres; i++) {
-                    linea += alquileres[i].toString() + "";
-                }
-
+                String linea = ConvertirAString();
                 ES.escribirArchivo("Alquiler_JRR.txt", linea, b);
-                
 
-                linea = null;
-                for (int i = 0; i < nClientes; i++) {
-                    linea += clientes[i].toString() + "";
-                }
-
+                linea = ConvertirCString();
                 ES.escribirArchivo("Clientes_JRR.txt", linea, b);
-                linea = null;
-                for (int i = 0; i < nVehiculos; i++) {
-                    linea += vehiculos[i].toString() + "";
-                }
 
+                linea = ConvertirVString();
                 ES.escribirArchivo("Vehiculos_JRR.txt", linea, b);
 
                 break;
         }
+    }
+
+    public static String ConvertirAString() {
+        if (alquileres[0] != null) {
+            String linea = alquileres[0].toString();
+            for (int i = 1; i < nAlquileres; i++) {
+                linea += alquileres[i].toString2() + " \n";
+            }
+            return linea;
+        }
+        return null;
+    }
+
+    public static String ConvertirCString() {
+        if (clientes[0] != null) {
+            String linea = clientes[0].toString();
+            for (int i = 1; i < nClientes; i++) {
+                linea += clientes[i].toString() + " \n";
+            }
+            return linea;
+        }
+        return null;
+    }
+
+    public static String ConvertirVString() {
+        if (vehiculos[0] != null) {
+            String linea = vehiculos[0].toString();
+            for (int i = 1; i < nVehiculos; i++) {
+                linea += vehiculos[i].toString() + " \n";
+            }
+            return linea;
+        }
+        return null;
     }
 
     public static void CargarDatos() {
@@ -754,17 +829,15 @@ public class JRR_AlquilerVehiculos {
 
         switch (opcion) {
             case 1:
-        alquileres=   cargarAlquileres();
-         clientes  =cargarClientes();
-         vehiculos=  cargarVehiculos();
+                alquileres = cargarAlquileres();
+                clientes = cargarClientes();
+                vehiculos = cargarVehiculos();
 
                 break;
             case 2:
-          cargarAlquilerestxt();
-          cargarClientestxt();
-          cargarVehiculostxt();
-
-
+                cargarAlquilerestxt();
+                cargarClientestxt();
+                cargarVehiculostxt();
 
                 break;
         }

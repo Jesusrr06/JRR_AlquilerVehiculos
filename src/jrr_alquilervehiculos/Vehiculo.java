@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author dam1
  */
-public abstract class Vehiculo implements Serializable{
+public abstract class Vehiculo implements Serializable {
 
     private String matricula;
     private String marca;
@@ -19,14 +19,13 @@ public abstract class Vehiculo implements Serializable{
     private boolean disponible;
     private boolean baja;
 
-
     public Vehiculo(String matricula, String marca, String modelo, int cilindrada) {
         this.matricula = matricula;
         this.marca = marca;
         this.modelo = modelo;
         this.cilindrada = cilindrada;
-        disponible= true;
-        baja= false;
+        disponible = true;
+        baja = false;
     }
 
     public String getMatricula() {
@@ -67,18 +66,16 @@ public abstract class Vehiculo implements Serializable{
         sb.append("").append(matricula);
         sb.append("#");
         sb.append("").append(marca);
-                sb.append("#");
+        sb.append("#");
 
         sb.append("").append(modelo);
         sb.append("#");
-        sb.append("#").append(cilindrada);
+        sb.append("").append(cilindrada);
         sb.append("#");
         sb.append("").append(disponible);
         sb.append("#");
-        sb.append("#").append(baja);
+        sb.append("").append(baja);
         return sb.toString();
     }
-
-   
 
 }

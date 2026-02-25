@@ -191,94 +191,34 @@ public class ES {
 
     public static String leerArchivo(String ruta) {
         String datos = null;
-             FileReader fichero;
-        BufferedReader br = null;
-try {
-            fichero = new FileReader(ruta);
-            br = new BufferedReader(fichero);
-            String linea = br.readLine();
-            while (linea != null) {
-      
-                   
-                
-                linea = br.readLine();
-            }
-            br.close();
-        } catch (IOException e) {
-            System.out.println("Error abriendo fichero: " + ruta);
-        }
-
-       
+        
+        File fichero = new File(ruta);
+        Scanner sc = null;
 
         try {
+            System.out.println("Leyendo el contenido del fichero..........\n\n");
+            sc = new Scanner(fichero);
 
-            String linea=null;
-            System.out.println("Contenido del archivo:");
-            System.out.println("----------------------");
-
-            while ((linea = br.readLine()) != null) {
+            // leer línea a linea el fichero
+            while (sc.hasNextLine()) {
+                String linea = sc.nextLine();
                 System.out.println(linea);
-                datos += linea + "\n";
             }
 
-        } catch (IOException e) {
-            System.out.println("Error al leer el archivo.");
+            System.out.println("\n --->>   Lectura completada");
+        } catch (Exception e) {
+            System.out.println("Mensaje:  " + e.getMessage());
+        } finally {
+            try {
+                if (sc != null) {
+                    sc.close();
+                }
+            } catch (Exception e2) {
+                System.out.println("Mensaje fichero:   " + e2.getMessage());
+            }
         }
+
         return datos;
-    }
-    
-     public void cargarAlquilerestxt(String nombreF) {
-        FileReader fichero;
-        BufferedReader br;
-jrr_alquilervehiculos.Alquiler v;
-        try {
-            fichero = new FileReader(nombreF);
-            br = new BufferedReader(fichero);
-            String linea = br.readLine();
-            while (linea != null) {
-                v= crearalquiler(linea);
-                    // Lo inserta si no está ya en el ArrayList
-                    
-                
-                linea = br.readLine();
-            }
-            br.close();
-        } catch (IOException e) {
-            System.out.println("Error abriendo fichero: " + nombreF);
-        }
-
-    }
-public jrr_alquilervehiculos.Alquiler crearalquiler (String linea) {
-        jrr_alquilervehiculos.Alquiler nuevoAl = null;
-        // Objeto Scanner separado por ";"
-        Scanner s = new Scanner(linea).useDelimiter("#");
-        // Datos comunes (los del padre)
-        double PRECIO_DIA=s.nextDouble();
-String tiempo= s.next();
-        int dias = s.nextInt();
-        String matricula = s.next();
-        String marca = s.next();
-                String modelo = s.next();
-        int cilindrda = s.nextInt();
-        boolean disponible = s.nextBoolean();
-if( s.match(jrr_alquilervehiculos.Familiar.))
-        jrr_alquilervehiculos.Vehiculo turismo  =  new 
-        boolean conPatron = s.next().equals("S");
-        boolean alquilado = s.next().equals("S");
-        int diasNavegacion = s.nextInt();
-        int diasAlquiler = s.nextInt();
-        // Discriminamos según sea Lancha o Velero
-        if (tipo.equals("L")) {
-            // Atributos propios de Lancha
-            float potencia = Float.parseFloat(s.next());
-            // creamos Lancha
-            nuevoAl = new Alquiler(cliente, turismo);
-        } else if (tipo.equals("V")) {
-
-            
-        }
-    
-        return nuevoAl;
     }
 
 }
