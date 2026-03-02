@@ -184,25 +184,36 @@ public class ES {
     }
 
     public static String leerArchivo(String ruta) {
-        File archivo = new File(ruta);
-        if (!archivo.exists()) {
-            System.out.println("El archivo no existe: " + ruta);
-            return null;
+        String datos = "";
+        
+        File fichero = new File(ruta);
+        Scanner sc = null;
+
+        try {
+            System.out.println("Leyendo el contenido del fichero..........\n\n");
+            sc = new Scanner(fichero);
+
+            // leer línea a linea el fichero
+            while (sc.hasNextLine()) {
+                String linea = sc.nextLine();
+               datos += linea ;
+                System.out.println(linea);
+            }
+
+            System.out.println("\n --->>   Lectura completada");
+        } catch (Exception e) {
+            System.out.println("Mensaje:  " + e.getMessage());
+        } finally {
+            try {
+                if (sc != null) {
+                    sc.close();
+                }
+            } catch (Exception e2) {
+                System.out.println("Mensaje fichero:   " + e2.getMessage());
+            }
         }
 
-        StringBuilder datos = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                datos.append(linea).append(System.lineSeparator());
-            }
-        } catch (IOException e) {
-            System.out.println("Error al leer el archivo: " + e.getMessage());
-            return null;
-        }
-        return datos.toString();
+        return datos;
     }
-    
-    
 
 }

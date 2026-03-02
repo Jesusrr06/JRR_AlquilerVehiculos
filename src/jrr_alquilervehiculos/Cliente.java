@@ -28,6 +28,15 @@ public class Cliente implements Serializable {
         this.baja = false;
     }
 
+    public Cliente(String dni, String nombre, String direccion, String localidad, String codigoPostal, boolean baja) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.localidad = localidad;
+        this.codigoPostal = codigoPostal;
+        this.baja = baja;
+    }
+
     public Cliente(Cliente c) {
         this.dni = c.dni;
         this.nombre = c.nombre;

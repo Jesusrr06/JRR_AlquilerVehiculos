@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import utiles.ES;
 
 /**
  *
@@ -15,10 +16,10 @@ import java.time.temporal.ChronoUnit;
  */
 public class Alquiler implements Serializable {
     
-    final private DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("yyyyMMdd");
+    final private DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:SS.ss");
     
     final private double PRECIO_DIA = 30;
-    private LocalDateTime fecha;
+    private LocalDateTime fecha  ;
     private int dias;
     private Vehiculo turismo;
     private Cliente cliente;
@@ -29,6 +30,12 @@ public class Alquiler implements Serializable {
         this.fecha= LocalDateTime.now();
         
     }
+      
+
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
+    }
+    
     
     public Cliente getCliente() {
         return cliente;
@@ -60,15 +67,17 @@ public class Alquiler implements Serializable {
     
     public void cerrar() {
         this.getTurismo().setDisponible(true);
-        
-        this.dias = diferenciaDias(this.fecha) + 1;
+        double precioal=  this.precioAlquiler();
+        this.dias = diferenciaDias(this.fecha) + 1;  
+        ES.escribir("Su alquiler sale a " +  precioal);
+
     }
     
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("").append(PRECIO_DIA);
-        sb.append("#").append(fecha);
+        sb.append("#").append(fecha.format(FORMATO_FECHA));
         sb.append("#").append(dias);
         sb.append("#").append(turismo);
         sb.append("#").append(cliente);
@@ -76,4 +85,12 @@ public class Alquiler implements Serializable {
         return sb.toString();
     }
     
+      public String toString2() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("").append(fecha.format(FORMATO_FECHA));
+        sb.append("#").append(turismo.getMatricula());
+        sb.append("#").append(cliente.getDni());
+        sb.append("");
+        return sb.toString();
+    }
 }

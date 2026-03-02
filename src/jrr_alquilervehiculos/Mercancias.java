@@ -38,7 +38,8 @@ public abstract class Mercancias extends Vehiculo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(super.toString());
-        sb.append("").append(pma);
+        sb.append("M");
+        sb.append("#").append(pma);
         sb.append("#").append(volumen);
         sb.append("#");
         return sb.toString();
