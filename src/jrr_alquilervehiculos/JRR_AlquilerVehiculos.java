@@ -48,7 +48,13 @@ public class JRR_AlquilerVehiculos {
         int opcion;
         String dni;
         String matricula;
+        boolean b = ES.leerBoolean("Desea cargar los datos anteriores? (Solo falla la fecha)");
+        if (b) {
+            cargarClientestxt();
+            cargarVehiculostxt();
+            cargarAlquilerestxt(); // la Fecha da problemas
 
+        }
         do {
             menu();
             opcion = ES.leerEntero("Introduzca una opcion: \n");
@@ -690,21 +696,24 @@ public class JRR_AlquilerVehiculos {
         String linea = ES.leerArchivo(RUTA_A);
         try {
             Scanner s = new Scanner(linea).useDelimiter("#");
-            while (!linea.equals("") && !s.next().equals("")) {
-                LocalDateTime fecha = LocalDateTime.parse(linea) ;
+            while (!linea.equals("")) {
                 String matricula = s.next();
                 String dni = s.next();
-
                 v = getVehiculos(matricula);
                 c = getClientes(dni);
                 a = new Alquiler(c, v);
-                a.setFecha(fecha);
+                String date = s.next();
                 alquileres[i] = a;
                 i++;
                 nAlquileres++;
+                ES.escribir("Se ha añadido un alquiler");
+                LocalDateTime fecha = LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE);
+
+                a.setFecha(fecha);
+
             }
         } catch (Exception e) {
-            System.out.println(e); 
+            System.out.println(e);
             return false;
         }
         return true;
@@ -727,6 +736,7 @@ public class JRR_AlquilerVehiculos {
                 clientes[i] = c;
                 i++;
                 nClientes++;
+                ES.escribir("Se ha añadido un cliente");
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -741,7 +751,7 @@ public class JRR_AlquilerVehiculos {
         String linea = ES.leerArchivo(RUTA_V);
         try {
             Scanner s = new Scanner(linea).useDelimiter("#");
-            while (!linea.equals("")) {
+            while (!linea.equals("") && s.hasNext()) {
                 String matricula = s.next();
                 String marca = s.next();
                 String modelo = s.next();
@@ -819,6 +829,8 @@ public class JRR_AlquilerVehiculos {
 
                 vehiculos[i] = v;
                 i++;
+                ES.escribir("Se ha añadido un vehiculo");
+
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -826,21 +838,6 @@ public class JRR_AlquilerVehiculos {
         }
         nVehiculos = i;
         return true;
-    }
-
-    public static LocalDateTime leerfecha(String linea) {
-        Scanner date = new Scanner(linea).useDelimiter("-").useDelimiter(":").useDelimiter(".");
-          int anio = date.nextInt();
-        int mes = date.nextInt();
-        int dia = date.nextInt();
-        int hora = date.nextInt();
-        int minuto = date.nextInt();
-        int segundo = date.nextInt();
-        int microsegundos = date.nextInt();
-     LocalDateTime   fecha = LocalDateTime.of(dia, minuto, minuto, hora, minuto, segundo, microsegundos);
-         
-        return fecha;
-
     }
 
     public static void guardarDatos() {
@@ -870,9 +867,9 @@ public class JRR_AlquilerVehiculos {
 
     public static String ConvertirAString() {
         if (alquileres[0] != null) {
-            String linea = alquileres[0].toString2() + "\n";
+            String linea = alquileres[0].toString2();
             for (int i = 1; i < nAlquileres; i++) {
-                linea += alquileres[i].toString2() + " \n";
+                linea += alquileres[i].toString2();
             }
             return linea;
         }
@@ -881,10 +878,10 @@ public class JRR_AlquilerVehiculos {
 
     public static String ConvertirCString() {
         if (clientes[0] != null) {
-            String linea = clientes[0].toString() + "\n";
+            String linea = clientes[0].toString();
             if (clientes[1] != null) {
                 for (int i = 1; i < nClientes; i++) {
-                    linea += clientes[i].toString() + " \n";
+                    linea += clientes[i].toString();
                 }
             }
             return linea;
@@ -898,7 +895,7 @@ public class JRR_AlquilerVehiculos {
             if (clientes[1] != null) {
 
                 for (int i = 1; i < nVehiculos; i++) {
-                    linea += vehiculos[i].toString() + " \n";
+                    linea += vehiculos[i].toString();
                 }
             }
             return linea;
