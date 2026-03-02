@@ -691,7 +691,7 @@ public class JRR_AlquilerVehiculos {
         try {
             Scanner s = new Scanner(linea).useDelimiter("#");
             while (!linea.equals("") && !s.next().equals("")) {
-                LocalDateTime fecha = leerfecha(s.next("yyyy-MM-dd HH:mm:SS.ss"));
+                LocalDateTime fecha = LocalDateTime.parse(linea) ;
                 String matricula = s.next();
                 String dni = s.next();
 
