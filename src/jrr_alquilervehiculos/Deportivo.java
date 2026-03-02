@@ -45,7 +45,7 @@ public class Deportivo extends Turismo {
         sb.append(super.toString());
         sb.append("#D#").append(descapotable);
         sb.append("#").append(cambio);
-        sb.append("\n");
+        sb.append("#");
         return sb.toString();
     }
 

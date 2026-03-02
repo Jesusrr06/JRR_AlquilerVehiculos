@@ -16,10 +16,10 @@ import utiles.ES;
  */
 public class Alquiler implements Serializable {
     
-    final private DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:SS.ss");
+    final private DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("yyyy-MM-dd/HH:mm:SS.ss");
     
     final private double PRECIO_DIA = 30;
-    private LocalDateTime fecha  ;
+    private LocalDateTime fechainicio  ;
     private int dias;
     private Vehiculo turismo;
     private Cliente cliente;
@@ -27,13 +27,13 @@ public class Alquiler implements Serializable {
     public Alquiler(Cliente cliente, Vehiculo turismo) {
         this.cliente = cliente;
         this.turismo = turismo;
-        this.fecha= LocalDateTime.now();
+        this.fechainicio= LocalDateTime.now();
         
     }
       
 
     public void setFecha(LocalDateTime fecha) {
-        this.fecha = fecha;
+        this.fechainicio = fecha;
     }
     
     
@@ -46,7 +46,7 @@ public class Alquiler implements Serializable {
     }
     
     public LocalDateTime getFecha() {
-        return fecha;
+        return fechainicio;
         
     }
     
@@ -68,7 +68,7 @@ public class Alquiler implements Serializable {
     public void cerrar() {
         this.getTurismo().setDisponible(true);
         double precioal=  this.precioAlquiler();
-        this.dias = diferenciaDias(this.fecha) + 1;  
+        this.dias = diferenciaDias(this.fechainicio) + 1;  
         ES.escribir("Su alquiler sale a " +  precioal);
 
     }
@@ -77,7 +77,7 @@ public class Alquiler implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("").append(PRECIO_DIA);
-        sb.append("#").append(fecha.format(FORMATO_FECHA));
+        sb.append("#").append(fechainicio.format(FORMATO_FECHA));
         sb.append("#").append(dias);
         sb.append("#").append(turismo);
         sb.append("#").append(cliente);
@@ -87,10 +87,10 @@ public class Alquiler implements Serializable {
     
       public String toString2() {
         StringBuilder sb = new StringBuilder();
-        sb.append("").append(fecha.format(FORMATO_FECHA));
+        sb.append("").append(fechainicio.format(FORMATO_FECHA));
         sb.append("#").append(turismo.getMatricula());
         sb.append("#").append(cliente.getDni());
-        sb.append("");
+        sb.append("#");
         return sb.toString();
     }
 }

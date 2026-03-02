@@ -45,7 +45,7 @@ public class Familiar extends Turismo {
         sb.append(super.toString());
         sb.append("F#").append(nPlazas);
         sb.append("#").append(sillaBebe);
-        sb.append("\n");
+        sb.append("#");
         return sb.toString();
     }
 

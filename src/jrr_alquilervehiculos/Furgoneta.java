@@ -39,7 +39,7 @@ public class Furgoneta extends Mercancias {
         sb.append(super.toString());
         sb.append("").append(refrigerado);
         sb.append("#").append(tamanio);
-        sb.append("\n");
+        sb.append("#");
         return sb.toString();
     }
 

@@ -691,7 +691,7 @@ public class JRR_AlquilerVehiculos {
         try {
             Scanner s = new Scanner(linea).useDelimiter("#");
             while (!linea.equals("") && !s.next().equals("")) {
-                LocalDateTime fecha = leerfecha(s.next());
+                LocalDateTime fecha = leerfecha(s.next("yyyy-MM-dd HH:mm:SS.ss"));
                 String matricula = s.next();
                 String dni = s.next();
 
@@ -704,7 +704,7 @@ public class JRR_AlquilerVehiculos {
                 nAlquileres++;
             }
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e); 
             return false;
         }
         return true;
@@ -716,7 +716,7 @@ public class JRR_AlquilerVehiculos {
         String linea = ES.leerArchivo(RUTA_C);
         try {
             Scanner s = new Scanner(linea).useDelimiter("#");
-            while (!linea.equals("") && !s.next().equals("")) {
+            while (!linea.equals("")) {
                 String dni = s.next();
                 String nombre = s.next();
                 String direccion = s.next();
@@ -741,7 +741,7 @@ public class JRR_AlquilerVehiculos {
         String linea = ES.leerArchivo(RUTA_V);
         try {
             Scanner s = new Scanner(linea).useDelimiter("#");
-            while (!linea.equals("") && !s.next().equals("")) {
+            while (!linea.equals("")) {
                 String matricula = s.next();
                 String marca = s.next();
                 String modelo = s.next();
@@ -829,18 +829,16 @@ public class JRR_AlquilerVehiculos {
     }
 
     public static LocalDateTime leerfecha(String linea) {
-        Scanner sc = new Scanner(linea).useDelimiter("-").useDelimiter("T").useDelimiter(":").useDelimiter(".").useDelimiter("#");
-        LocalDateTime fecha = LocalDateTime.parse(linea, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:SS.ss"));
-        /*  int anio = sc.nextInt();
-        int mes = sc.nextInt();
-        int dia = sc.nextInt();
-        int hora = sc.nextInt();
-        int minuto = sc.nextInt();
-        int segundo = sc.nextInt();
-        int microsegundos = sc.nextInt();
-        LocalDateTime fecha;
-        fecha = LocalDateTime.of(dia, minuto, minuto, hora, minuto, segundo, microsegundos);
-         */
+        Scanner date = new Scanner(linea).useDelimiter("-").useDelimiter(":").useDelimiter(".");
+          int anio = date.nextInt();
+        int mes = date.nextInt();
+        int dia = date.nextInt();
+        int hora = date.nextInt();
+        int minuto = date.nextInt();
+        int segundo = date.nextInt();
+        int microsegundos = date.nextInt();
+     LocalDateTime   fecha = LocalDateTime.of(dia, minuto, minuto, hora, minuto, segundo, microsegundos);
+         
         return fecha;
 
     }
