@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Scanner;
 import utiles.ES;
 import utiles.Utilidades;
@@ -34,11 +35,11 @@ public class JRR_AlquilerVehiculos {
     private final static int MAX_VEHICULOS = 50;
     private static int nVehiculos = 0;
 
-    private static Vehiculo[] vehiculos = new Vehiculo[MAX_VEHICULOS];
+    private static ArrayList<Vehiculo> vehiculos = new ArrayList<>();
 
-    private static Cliente[] clientes = new Cliente[MAX_CLIENTES];
+    private static ArrayList<Cliente> clientes = new ArrayList<>();
 
-    private static Alquiler[] alquileres = new Alquiler[MAX_ALQUILERES];
+    private static ArrayList<Alquiler> alquileres = new ArrayList<>() ;
 
     /**
      * @param args the command line arguments
@@ -176,11 +177,10 @@ public class JRR_AlquilerVehiculos {
     }
 
     private static Cliente getClientes(String dnic) {
-        for (int i = 0; i <= nClientes; i++) {
-            if (clientes[i] == null) {
-                return null;
-            } else if (clientes[i].getDni().equals(dnic)) {
-                return clientes[i];
+        for (Cliente c : clientes) {
+            
+         if (c.getDni().equals(dnic)) {
+                return c;
 
             }
         }
@@ -189,11 +189,9 @@ public class JRR_AlquilerVehiculos {
     }
 
     private static Vehiculo getVehiculos(String m) {
-        for (int i = 0; i <= nVehiculos; i++) {
-            if (vehiculos[i] == null) {
-                return null;
-            } else if (vehiculos[i].getMatricula().equals(m)) {
-                return vehiculos[i];
+        for (Vehiculo v: vehiculos) {
+          if (v.getMatricula().equals(m)) {
+                return v;
 
             }
         }
@@ -206,7 +204,7 @@ public class JRR_AlquilerVehiculos {
         if (nClientes < MAX_CLIENTES) {
             if (getClientes(c.getDni()) == null && !b) {
 
-                clientes[nClientes] = c;
+                clientes.add(c);
 
                 nClientes++;
                 ES.escribirLn("Cliente añadido con exito");
@@ -226,7 +224,7 @@ public class JRR_AlquilerVehiculos {
         if (nVehiculos < MAX_VEHICULOS) {
             if (getVehiculos(v.getMatricula()) == null && !b) {
 
-                vehiculos[nVehiculos] = v;
+                vehiculos.add(v) ;
                 nVehiculos++;
                 ES.escribirLn("Vehiculo añadido con exito");
 
@@ -241,7 +239,7 @@ public class JRR_AlquilerVehiculos {
             ES.escribirLn("Capacidad al maximo");
         }
     }
-
+/*
     private static void borrarCliente(String dni) {
         boolean b = false;
 
@@ -284,7 +282,7 @@ public class JRR_AlquilerVehiculos {
 
         }
     }
-
+*/
     private static void darBajaCliente(String dni) {
         boolean b = false;
 
@@ -310,10 +308,11 @@ public class JRR_AlquilerVehiculos {
 
     private static void quitarHuecoC(String dni) {
         boolean b = false;
-        for (int i = 0; i < MAX_ALQUILERES && !b; i++) {
-            if (alquileres[i].getCliente().getDni().equals(dni)) {
-                clientes[i] = null;
-                clientes[i] = clientes[nClientes + 1];
+        for (Alquiler a : alquileres) {
+            if (a.getCliente().getDni().equals(dni)) {
+                a.
+                clientes= null;
+                clientes = clientes[nClientes + 1];
                 clientes[nClientes + 1] = null;
                 nClientes--;
                 b = true;
