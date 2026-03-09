@@ -691,7 +691,7 @@ public class JRR_AlquilerVehiculos {
         try {
             Scanner s = new Scanner(linea).useDelimiter("#");
             while (!linea.equals("") && !s.next().equals("")) {
-                LocalDateTime fecha = LocalDateTime.parse(linea) ;
+                LocalDateTime fecha = LocalDateTime.parse(linea);
                 String matricula = s.next();
                 String dni = s.next();
 
@@ -704,7 +704,7 @@ public class JRR_AlquilerVehiculos {
                 nAlquileres++;
             }
         } catch (Exception e) {
-            System.out.println(e); 
+            System.out.println(e);
             return false;
         }
         return true;
@@ -712,21 +712,30 @@ public class JRR_AlquilerVehiculos {
 
     public static boolean cargarClientestxt() {
         Cliente c;
+        nClientes = 0;
         int i = 0;
-        String linea = ES.leerArchivo(RUTA_C);
+        String fichero = ES.leerArchivo(RUTA_C);
+        String[] linea = fichero.split("\n");
+
         try {
-            Scanner s = new Scanner(linea).useDelimiter("#");
-            while (!linea.equals("")) {
-                String dni = s.next();
-                String nombre = s.next();
-                String direccion = s.next();
-                String localidad = s.next();
-                String codPostal = s.next();
-                boolean baja = s.nextBoolean();
-                c = new Cliente(dni, nombre, direccion, localidad, codPostal, baja);
+            while (i < linea.length) {
+                String[] dni = linea[i].split("#");
+                String[] nombre = linea[i].split("#");
+                String[] direccion = linea[i].split("#");
+                String[] localidad = linea[i].split("#");
+                String[] codPostal = linea[i].split("#");
+                String[] isbaja = linea[i].split("#");
+                boolean baja = false;
+                if (isbaja.equals("true")) {
+                    baja = true;
+                } else {
+                    baja = false;
+                }
+                c = new Cliente(dni[i], nombre[i], direccion[i], localidad[i], codPostal[i], baja);
                 clientes[i] = c;
                 i++;
                 nClientes++;
+
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -737,108 +746,130 @@ public class JRR_AlquilerVehiculos {
 
     public static boolean cargarVehiculostxt() {
         Vehiculo v = null;
+        nVehiculos = 0;
         int i = 0;
-        String linea = ES.leerArchivo(RUTA_V);
+        String fichero = ES.leerArchivo(RUTA_V);
+        String[] linea = fichero.split("\n");
         try {
-            Scanner s = new Scanner(linea).useDelimiter("#");
-            while (!linea.equals("")) {
-                String matricula = s.next();
-                String marca = s.next();
-                String modelo = s.next();
-                int cilindrada = s.nextInt();
-                boolean disponible = s.nextBoolean();
-                boolean baja = s.nextBoolean();
-                String tipo = s.next();
-                if (tipo.equals("T")) {
-                    int npuertas = s.nextInt();
-                    String tcombustible = s.next();
-                    Enumerados.TipoCombustible combustible = null;
-                    switch (tcombustible) {
+            while (i < linea.length) {
+                String[] matricula = linea[i].split("#");
+                String[] marca = linea[i].split("#");
+                String[] modelo = linea[i].split("#");
+                String[] num = linea[i].split("#");
+
+                int[] cilindrada = null;
+
+                cilindrada[i] = Integer.parseInt(num[i]);
+
+                boolean[] disponible = null;
+                String[] isdisponible = linea[i].split("#");
+                disponible[i] = Boolean.parseBoolean(isdisponible[i]);
+                String[] isbaja = linea[i].split("#");
+                boolean[] baja = null;
+                baja[i] = Boolean.parseBoolean(isbaja[i]);
+                String[] tipo = linea[i].split("#");
+                if (tipo[i].equals("T")) {
+                    int [] npuertas =null;
+                 String[] numpuertas = linea[i].split("#");
+                 npuertas[i] =Integer.parseInt(numpuertas[i]);
+                  String []tcombustible =linea[i].split("#");;
+                    Enumerados.TipoCombustible [] combustible = null;
+                    switch (tcombustible[i]) {
                         case "GASOLINA":
-                            combustible = Enumerados.TipoCombustible.GASOLINA;
+                            combustible[i] = Enumerados.TipoCombustible.GASOLINA;
                             break;
                         case "DIESEL":
-                            combustible = Enumerados.TipoCombustible.DIESEL;
+                            combustible [i]= Enumerados.TipoCombustible.DIESEL;
                             break;
                         case "HIBRIDO":
-                            combustible = Enumerados.TipoCombustible.HIBRIDO;
+                            combustible[i] = Enumerados.TipoCombustible.HIBRIDO;
                             break;
                         case "ELECTRICO":
-                            combustible = Enumerados.TipoCombustible.ELECTRICO;
+                            combustible[i] = Enumerados.TipoCombustible.ELECTRICO;
                             break;
 
                     }
-                    tipo = s.next();
+                    tipo = linea[i].split("#");;
                     if (tipo.equals("F")) {
-                        int nPlazas = s.nextInt();
-                        boolean sillaBebe = s.nextBoolean();
-
-                        v = new Familiar(nPlazas, sillaBebe, npuertas, combustible, matricula, marca, modelo, cilindrada);
+String[] numplazas= linea[i].split("#");;
+                        int[] nPlazas = null;
+                        nPlazas[i]= Integer.parseInt(numplazas[i]);
+                       String [] issillabebe= linea[i].split("#");
+                        boolean[] sillaBebe = null ;
+sillaBebe[i]=Boolean.parseBoolean( issillabebe[i]);
+                        v = new Familiar(nPlazas[i], sillaBebe[i], npuertas[i], combustible[i], matricula[i], marca[i], modelo[i], cilindrada[i]);
 
                     } else if (tipo.equals("D")) {
-                        boolean descapotable = s.nextBoolean();
-                        String tcajacambio = s.next();
-                        Enumerados.CajaCambio cambio = null;
-                        switch (tcajacambio) {
+                        boolean[] descapotable=null;
+                        String[] isdesc= linea[i].split("#");
+                        descapotable[i]=Boolean.parseBoolean(isdesc[i]);
+                        String[] tcajacambio = linea[i].split("#");;
+                        Enumerados.CajaCambio[] cambio = null;
+                        switch (tcajacambio[i]) {
                             case "AUTOMATICA":
-                                cambio = Enumerados.CajaCambio.AUTOMATICA;
+                                cambio[i] = Enumerados.CajaCambio.AUTOMATICA;
                                 break;
                             case "MANUAL":
-                                cambio = Enumerados.CajaCambio.MANUAL;
+                                cambio[i] = Enumerados.CajaCambio.MANUAL;
 
                                 break;
                         }
-                        v = new Deportivo(descapotable, cambio, npuertas, combustible, matricula, marca, modelo, cilindrada);
+                        v = new Deportivo(descapotable[i], cambio[i], npuertas[i], combustible[i], matricula[i], marca[i], modelo[i], cilindrada[i]);
 
                     }
 
                 } else if (tipo.equals("M")) {
-                    int pma = s.nextInt();
-                    int volumen = s.nextInt();
-                    boolean refrigerado = s.nextBoolean();
-                    Enumerados.Tamano tamanio = null;
-                    String tipotamanio = s.next();
-                    switch (tipotamanio) {
+                    int [] pma = null;
+                    String [] ispma= linea[i].split("#");
+                    pma[i]=Integer.parseInt(ispma[i]);
+                    int []volumen = null;
+                    String [] isvol= linea[i].split("#");
+                    volumen[i]= Integer.parseInt(isvol[i]);
+                    boolean[] refrigerado = null;
+                    
+                    Enumerados.Tamano[] tamanio = null;
+                    String[] tipotamanio = linea[i].split("#");;
+                    switch (tipotamanio[i]) {
                         case "PEQUENA":
-                            tamanio = Enumerados.Tamano.PEQUENA;
+                            tamanio[i] = Enumerados.Tamano.PEQUENA;
 
                             break;
                         case "MEDIANA":
-                            tamanio = Enumerados.Tamano.MEDIANA;
+                            tamanio [i]= Enumerados.Tamano.MEDIANA;
 
                             break;
                         case "GRANDE":
-                            tamanio = Enumerados.Tamano.GRANDE;
+                            tamanio[i] = Enumerados.Tamano.GRANDE;
                             break;
                     }
 
-                    v = new Furgoneta(refrigerado, tamanio, pma, volumen, matricula, marca, modelo, cilindrada);
+                    v = new Furgoneta(refrigerado[i], tamanio[i], pma[i], volumen[i], matricula[i], marca[i], modelo[i], cilindrada[i]);
                     break;
 
                 }
 
                 vehiculos[i] = v;
                 i++;
+                nVehiculos++;
             }
         } catch (Exception e) {
             System.out.println(e);
             return false;
         }
-        nVehiculos = i;
         return true;
     }
 
     public static LocalDateTime leerfecha(String linea) {
         Scanner date = new Scanner(linea).useDelimiter("-").useDelimiter(":").useDelimiter(".");
-          int anio = date.nextInt();
+        int anio = date.nextInt();
         int mes = date.nextInt();
         int dia = date.nextInt();
         int hora = date.nextInt();
         int minuto = date.nextInt();
         int segundo = date.nextInt();
         int microsegundos = date.nextInt();
-     LocalDateTime   fecha = LocalDateTime.of(dia, minuto, minuto, hora, minuto, segundo, microsegundos);
-         
+        LocalDateTime fecha = LocalDateTime.of(dia, minuto, minuto, hora, minuto, segundo, microsegundos);
+
         return fecha;
 
     }
