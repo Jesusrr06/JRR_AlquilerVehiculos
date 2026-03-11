@@ -196,7 +196,7 @@ public class ES {
             // leer línea a linea el fichero
             while (sc.hasNextLine()) {
                 String linea = sc.nextLine();
-               datos += linea ;
+               datos += linea +"\n" ;
                 System.out.println(linea);
             }
 
