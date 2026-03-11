@@ -683,6 +683,7 @@ public class JRR_AlquilerVehiculos {
         Cliente c;
         Vehiculo v;
         nAlquileres = 0;
+        alquileres.clear();
         int i = 0;
         String fichero = ES.leerArchivo(RUTA_A);
         String[] linea = fichero.split("\n");
@@ -718,6 +719,7 @@ public class JRR_AlquilerVehiculos {
         Cliente c;
         nClientes = 0;
         int i = 0;
+        clientes.clear();
         String fichero = ES.leerArchivo(RUTA_C);
         String[] linea = fichero.split("\n");
         String[] unCliente = null;
@@ -747,6 +749,7 @@ public class JRR_AlquilerVehiculos {
     public static boolean cargarVehiculostxt() {
         Vehiculo v = null;
         nVehiculos = 0;
+        vehiculos.clear();
         int i = 0;
         String fichero = ES.leerArchivo(RUTA_V);
         String[] linea = fichero.split("\n");
