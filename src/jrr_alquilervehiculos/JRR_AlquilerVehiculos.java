@@ -695,6 +695,7 @@ public class JRR_AlquilerVehiculos {
         Alquiler a;
         Cliente c;
         Vehiculo v;
+        nAlquileres=0;
         int i = 0;
         String fichero = ES.leerArchivo(RUTA_A);
         String[] linea = fichero.split("\n");
