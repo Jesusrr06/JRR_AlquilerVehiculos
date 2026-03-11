@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import utiles.ES;
@@ -48,7 +50,10 @@ public class JRR_AlquilerVehiculos {
         int opcion;
         String dni;
         String matricula;
-
+        boolean b = ES.leerBoolean("Desea cargar los datos anteriores?");
+        if (b) {
+            CargarDatos();
+        }
         do {
             menu();
             opcion = ES.leerEntero("Introduzca una opcion: \n");
@@ -145,6 +150,10 @@ public class JRR_AlquilerVehiculos {
                 default:
             }
         } while (opcion != 0);
+        b = ES.leerBoolean("Desea guardar los datos?");
+        if (b) {
+            guardarDatos();
+        }
 
     }
 
@@ -687,17 +696,23 @@ public class JRR_AlquilerVehiculos {
         Cliente c;
         Vehiculo v;
         int i = 0;
-        String linea = ES.leerArchivo(RUTA_A);
+        String fichero = ES.leerArchivo(RUTA_A);
+        String[] linea = fichero.split("\n");
+        String[] unAlquiler = null;
         try {
-            Scanner s = new Scanner(linea).useDelimiter("#");
-            while (!linea.equals("") && !s.next().equals("")) {
-                LocalDateTime fecha = LocalDateTime.parse(linea);
-                String matricula = s.next();
-                String dni = s.next();
+            while (i < linea.length) {
+                unAlquiler = linea[i].split("#");
 
-                v = getVehiculos(matricula);
-                c = getClientes(dni);
+                String[] matricula = unAlquiler[0].split("#");
+                String[] dni = unAlquiler[1].split("#");
+                String[] date = unAlquiler[2].split("-");
+                v = getVehiculos(matricula[i]);
+                c = getClientes(dni[i]);
                 a = new Alquiler(c, v);
+                int year = Integer.parseInt(date[0]);
+                int month = Integer.parseInt(date[1]);
+                int day = Integer.parseInt(date[2]);
+                LocalDateTime fecha = LocalDateTime.of(year, month, day, 0, 0);
                 a.setFecha(fecha);
                 alquileres[i] = a;
                 i++;
@@ -716,21 +731,17 @@ public class JRR_AlquilerVehiculos {
         int i = 0;
         String fichero = ES.leerArchivo(RUTA_C);
         String[] linea = fichero.split("\n");
-
+        String[] unCliente = null;
         try {
             while (i < linea.length) {
-                String[] dni = linea[i].split("#");
-                String[] nombre = linea[i].split("#");
-                String[] direccion = linea[i].split("#");
-                String[] localidad = linea[i].split("#");
-                String[] codPostal = linea[i].split("#");
-                String[] isbaja = linea[i].split("#");
-                boolean baja = false;
-                if (isbaja.equals("true")) {
-                    baja = true;
-                } else {
-                    baja = false;
-                }
+                unCliente = linea[i].split("#");
+                String[] dni = unCliente[0].split("#");
+                String[] nombre = unCliente[1].split("#");
+                String[] direccion = unCliente[2].split("#");
+                String[] localidad = unCliente[3].split("#");
+                String[] codPostal = unCliente[4].split("#");
+                String[] isbaja = unCliente[5].split("#");
+                boolean baja = Boolean.parseBoolean(isbaja[i]);
                 c = new Cliente(dni[i], nombre[i], direccion[i], localidad[i], codPostal[i], baja);
                 clientes[i] = c;
                 i++;
@@ -750,60 +761,61 @@ public class JRR_AlquilerVehiculos {
         int i = 0;
         String fichero = ES.leerArchivo(RUTA_V);
         String[] linea = fichero.split("\n");
+        String[] unVehiculo = null;
         try {
             while (i < linea.length) {
-                String[] matricula = linea[i].split("#");
-                String[] marca = linea[i].split("#");
-                String[] modelo = linea[i].split("#");
-                String[] num = linea[i].split("#");
+                unVehiculo = linea[i].split("#");;
+                String[] matricula = unVehiculo[0].split("#");
+                String[] marca = unVehiculo[1].split("#");
+                String[] modelo = unVehiculo[2].split("#");
 
-                int[] cilindrada = null;
+                String[] num = unVehiculo[3].split("#");
+                int cilindrada = 0;
+                cilindrada = Integer.parseInt(num[i]);
 
-                cilindrada[i] = Integer.parseInt(num[i]);
+                String[] isdisponible = unVehiculo[4].split("#");
+                boolean disponible = Boolean.parseBoolean(isdisponible[i]);
 
-                boolean[] disponible = null;
-                String[] isdisponible = linea[i].split("#");
-                disponible[i] = Boolean.parseBoolean(isdisponible[i]);
-                String[] isbaja = linea[i].split("#");
-                boolean[] baja = null;
-                baja[i] = Boolean.parseBoolean(isbaja[i]);
-                String[] tipo = linea[i].split("#");
+                String[] isbaja = unVehiculo[5].split("#");
+                boolean baja = Boolean.parseBoolean(isbaja[i]);
+
+                String[] tipo = unVehiculo[6].split("#");
                 if (tipo[i].equals("T")) {
-                    int [] npuertas =null;
-                 String[] numpuertas = linea[i].split("#");
-                 npuertas[i] =Integer.parseInt(numpuertas[i]);
-                  String []tcombustible =linea[i].split("#");;
-                    Enumerados.TipoCombustible [] combustible = null;
+                    int npuertas = 0;
+                    String[] numpuertas = unVehiculo[7].split("#");
+                    npuertas = Integer.parseInt(numpuertas[i]);
+
+                    String[] tcombustible = unVehiculo[8].split("#");;
+                    Enumerados.TipoCombustible combustible = null;
                     switch (tcombustible[i]) {
                         case "GASOLINA":
-                            combustible[i] = Enumerados.TipoCombustible.GASOLINA;
+                            combustible = Enumerados.TipoCombustible.GASOLINA;
                             break;
                         case "DIESEL":
-                            combustible [i]= Enumerados.TipoCombustible.DIESEL;
+                            combustible = Enumerados.TipoCombustible.DIESEL;
                             break;
                         case "HIBRIDO":
-                            combustible[i] = Enumerados.TipoCombustible.HIBRIDO;
+                            combustible = Enumerados.TipoCombustible.HIBRIDO;
                             break;
                         case "ELECTRICO":
-                            combustible[i] = Enumerados.TipoCombustible.ELECTRICO;
+                            combustible = Enumerados.TipoCombustible.ELECTRICO;
                             break;
 
                     }
-                    tipo = linea[i].split("#");;
-                    if (tipo.equals("F")) {
-String[] numplazas= linea[i].split("#");;
-                        int[] nPlazas = null;
-                        nPlazas[i]= Integer.parseInt(numplazas[i]);
-                       String [] issillabebe= linea[i].split("#");
-                        boolean[] sillaBebe = null ;
-sillaBebe[i]=Boolean.parseBoolean( issillabebe[i]);
-                        v = new Familiar(nPlazas[i], sillaBebe[i], npuertas[i], combustible[i], matricula[i], marca[i], modelo[i], cilindrada[i]);
+                    String[] tipo2 = unVehiculo[9].split("#");
+                    if (tipo2[i].equals("F")) {
+                        String[] numplazas = unVehiculo[10].split("#");;
+                        int nPlazas = 0;
+                        nPlazas = Integer.parseInt(numplazas[i]);
 
-                    } else if (tipo.equals("D")) {
-                        boolean[] descapotable=null;
-                        String[] isdesc= linea[i].split("#");
-                        descapotable[i]=Boolean.parseBoolean(isdesc[i]);
-                        String[] tcajacambio = linea[i].split("#");;
+                        String[] issillabebe = unVehiculo[11].split("#");
+                        boolean sillaBebe = Boolean.parseBoolean(issillabebe[i]);
+                        v = new Familiar(nPlazas, sillaBebe, npuertas, combustible, matricula[i], marca[i], modelo[i], cilindrada);
+
+                    } else if (tipo2[i].equals("D")) {
+                        String[] isdesc = unVehiculo[9].split("#");
+                        boolean descapotable = Boolean.parseBoolean(isdesc[i]);
+                        String[] tcajacambio = unVehiculo[10].split("#");;
                         Enumerados.CajaCambio[] cambio = null;
                         switch (tcajacambio[i]) {
                             case "AUTOMATICA":
@@ -814,28 +826,29 @@ sillaBebe[i]=Boolean.parseBoolean( issillabebe[i]);
 
                                 break;
                         }
-                        v = new Deportivo(descapotable[i], cambio[i], npuertas[i], combustible[i], matricula[i], marca[i], modelo[i], cilindrada[i]);
+                        v = new Deportivo(descapotable, cambio[i], npuertas, combustible, matricula[i], marca[i], modelo[i], cilindrada);
 
                     }
 
-                } else if (tipo.equals("M")) {
-                    int [] pma = null;
-                    String [] ispma= linea[i].split("#");
-                    pma[i]=Integer.parseInt(ispma[i]);
-                    int []volumen = null;
-                    String [] isvol= linea[i].split("#");
-                    volumen[i]= Integer.parseInt(isvol[i]);
-                    boolean[] refrigerado = null;
-                    
+                } else if (tipo[i].equals("M")) {
+                    int pma = 0;
+                    String[] ispma = unVehiculo[7].split("#");
+                    pma = Integer.parseInt(ispma[i]);
+                    int volumen = 0;
+                    String[] isvol = unVehiculo[8].split("#");
+                    volumen = Integer.parseInt(isvol[i]);
+                    String[] isrefrigerado = unVehiculo[9].split("#");
+                    boolean refrigerado = Boolean.parseBoolean(isrefrigerado[i]);
+
                     Enumerados.Tamano[] tamanio = null;
-                    String[] tipotamanio = linea[i].split("#");;
+                    String[] tipotamanio = unVehiculo[10].split("#");
                     switch (tipotamanio[i]) {
                         case "PEQUENA":
                             tamanio[i] = Enumerados.Tamano.PEQUENA;
 
                             break;
                         case "MEDIANA":
-                            tamanio [i]= Enumerados.Tamano.MEDIANA;
+                            tamanio[i] = Enumerados.Tamano.MEDIANA;
 
                             break;
                         case "GRANDE":
@@ -843,7 +856,7 @@ sillaBebe[i]=Boolean.parseBoolean( issillabebe[i]);
                             break;
                     }
 
-                    v = new Furgoneta(refrigerado[i], tamanio[i], pma[i], volumen[i], matricula[i], marca[i], modelo[i], cilindrada[i]);
+                    v = new Furgoneta(refrigerado, tamanio[i], pma, volumen, matricula[i], marca[i], modelo[i], cilindrada);
                     break;
 
                 }
@@ -875,7 +888,7 @@ sillaBebe[i]=Boolean.parseBoolean( issillabebe[i]);
     }
 
     public static void guardarDatos() {
-        int opcion = ES.leerEntero("Introduce si quiere guerdar los archivos en (1)binario o (2)Fichero txt ");
+        /*   int opcion = ES.leerEntero("Introduce si quiere guerdar los archivos en (1)binario o (2)Fichero txt ");
 
         switch (opcion) {
             case 1:
@@ -885,18 +898,19 @@ sillaBebe[i]=Boolean.parseBoolean( issillabebe[i]);
 
                 break;
             case 2:
-                boolean b = ES.leerBoolean("Desea sobreescribir los ficheros  de txt?");
-                String linea = ConvertirAString();
-                ES.escribirArchivo("Alquileres_JRR.txt", linea, b);
+         */
+        boolean b = ES.leerBoolean("Desea sobreescribir los ficheros  de txt?");
+        String linea = ConvertirAString();
+        ES.escribirArchivo("Alquileres_JRR.txt", linea, b);
 
-                linea = ConvertirCString();
-                ES.escribirArchivo("Clientes_JRR.txt", linea, b);
+        linea = ConvertirCString();
+        ES.escribirArchivo("Clientes_JRR.txt", linea, b);
 
-                linea = ConvertirVString();
-                ES.escribirArchivo("Vehiculos_JRR.txt", linea, b);
+        linea = ConvertirVString();
+        ES.escribirArchivo("Vehiculos_JRR.txt", linea, b);
 
-                break;
-        }
+        /*     break;
+        }*/
     }
 
     public static String ConvertirAString() {
@@ -938,7 +952,7 @@ sillaBebe[i]=Boolean.parseBoolean( issillabebe[i]);
     }
 
     public static void CargarDatos() {
-        int opcion = ES.leerEntero("Introduce si quiere guerdar los archivos en (1)binario o (2)Fichero txt ");
+        /*  int opcion = ES.leerEntero("Introduce si quiere guerdar los archivos en (1)binario o (2)Fichero txt ");
 
         switch (opcion) {
             case 1:
@@ -947,14 +961,16 @@ sillaBebe[i]=Boolean.parseBoolean( issillabebe[i]);
                 alquileres = cargarAlquileres();
 
                 break;
-            case 2:
-                cargarClientestxt();
-                cargarVehiculostxt();
-                cargarAlquilerestxt();
+         case 2:
+         */
+        cargarClientestxt();
+        cargarVehiculostxt();
+        cargarAlquilerestxt();
 
-                break;
-        }
-
+        /*
+        break;
+       }
+         */
     }
 
 }
