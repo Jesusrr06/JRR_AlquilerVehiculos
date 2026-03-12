@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
@@ -694,6 +695,7 @@ public class JRR_AlquilerVehiculos {
         Alquiler a;
         Cliente c;
         Vehiculo v;
+        nAlquileres=0;
         int i = 0;
         String fichero = ES.leerArchivo(RUTA_A);
         String[] linea = fichero.split("\n");
