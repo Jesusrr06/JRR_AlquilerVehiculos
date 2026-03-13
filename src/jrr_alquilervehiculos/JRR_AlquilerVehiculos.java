@@ -14,9 +14,9 @@ import utiles.Utilidades;
  */
 public class JRR_AlquilerVehiculos {
 
-    private final static String RUTA_A = "datos/Alquileres_JRR.txt";
-    private final static String RUTA_V = "datos/Vehiculos_JRR.txt";
-    private final static String RUTA_C = "datos/Clientes_JRR.txt";
+    private final static String RUTA_A = "datos/Alquileres_JRR.dat";
+    private final static String RUTA_V = "datos/Vehiculos_JRR.dat";
+    private final static String RUTA_C = "datos/Clientes_JRR.dat";
 
     private final static int MAX_ALQUILERES = 50;
     private static int nAlquileres = 0;
@@ -131,6 +131,10 @@ public class JRR_AlquilerVehiculos {
 
                     break;
                 case 12:
+                    String linea="";
+                    for (int i = 0; i < 10; i++) {
+                     linea+=clientes.toString()+"\n";
+                    }
                     guardarDatos();
                     break;
 
