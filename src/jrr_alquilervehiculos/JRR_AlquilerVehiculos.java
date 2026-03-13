@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package jrr_alquilervehiculos;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import utiles.ES;
@@ -15,9 +14,9 @@ import utiles.Utilidades;
  */
 public class JRR_AlquilerVehiculos {
 
-    private final static String RUTA_A = "Alquileres_JRR.txt";
-    private final static String RUTA_V = "Vehiculos_JRR.txt";
-    private final static String RUTA_C = "Clientes_JRR.txt";
+    private final static String RUTA_A = "datos/Alquileres_JRR.txt";
+    private final static String RUTA_V = "datos/Vehiculos_JRR.txt";
+    private final static String RUTA_C = "datos/Clientes_JRR.txt";
 
     private final static int MAX_ALQUILERES = 50;
     private static int nAlquileres = 0;
@@ -376,7 +375,6 @@ public class JRR_AlquilerVehiculos {
     }
 
     private static void listarClientes() {
-        boolean b = false;
         for (Cliente c : clientes) {
 
             ES.escribirLn(c.toString());
@@ -385,7 +383,6 @@ public class JRR_AlquilerVehiculos {
     }
 
     private static void listarVehiculos() {
-        boolean b = false;
         for (Vehiculo v : vehiculos) {
             ES.escribirLn(v.toString());
 
@@ -395,7 +392,7 @@ public class JRR_AlquilerVehiculos {
     private static void listarAlquileres() {
         for (Alquiler a : alquileres) {
 
-            ES.escribir(a.toString());
+            ES.escribirLn(a.toString());
         }
 
     }
@@ -886,13 +883,13 @@ public class JRR_AlquilerVehiculos {
          */
         boolean b = ES.leerBoolean("Desea sobreescribir los ficheros  de txt?");
         String linea = ConvertirAString();
-        ES.escribirArchivo("Alquileres_JRR.txt", linea, b);
+        ES.escribirArchivo(RUTA_A, linea, b);
 
         linea = ConvertirCString();
-        ES.escribirArchivo("Clientes_JRR.txt", linea, b);
+        ES.escribirArchivo(RUTA_C, linea, b);
 
         linea = ConvertirVString();
-        ES.escribirArchivo("Vehiculos_JRR.txt", linea, b);
+        ES.escribirArchivo(RUTA_V, linea, b);
 
         /*     break;
         }*/
@@ -910,7 +907,7 @@ public class JRR_AlquilerVehiculos {
         String linea = "";
 
         for (Cliente c : clientes) {
-            linea += c.toString();
+            linea += c.toString() +"\n";
         }
 
         return linea;
@@ -920,7 +917,7 @@ public class JRR_AlquilerVehiculos {
         String linea = "";
 
         for (Vehiculo v : vehiculos) {
-            linea += v.toString();
+            linea += v.toString() + "\n";
         }
         return linea;
     }
