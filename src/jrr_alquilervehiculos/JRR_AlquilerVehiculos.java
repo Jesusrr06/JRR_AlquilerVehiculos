@@ -156,26 +156,33 @@ public class JRR_AlquilerVehiculos {
                             break;
 
                     }
-                    switch (opcion) {
-                        case 6:
-                        case 7:
-                            listarOrdenado(comparador);
-                            break;
-                        case 8:
 
-                            break;
-                    }
+                    listarOrdenado(comparador);
+
                     break;
                 case 8:
-                    menuListados();
+                    menuEliminados();
                     opcion = ES.leerEntero("Introduzca una opcion");
                     switch (opcion) {
                         case 1:
-                            
+                            comparador = (Comparator<Vehiculo>) (Vehiculo o1, Vehiculo o2)
+                                    -> o1.getMarca().compareTo(o2.getMarca());
 
+                            break;
+                        case 2:
+                            comparador = (Comparator<Alquiler>) (Alquiler o1, Alquiler o2)
+                                    -> o1.getTurismo().getMarca().compareTo(o2.getTurismo().getMarca());
+                            break;
+                        case 3:
+                            comparador = (Comparator<Alquiler>) (Alquiler o1, Alquiler o2)
+                                    -> o1.getFecha().compareTo(o2.getFecha());
+                            break;
+
+                        default:
                             break;
 
                     }
+                    break;
                 case 9:
 
                     guardarDatos();
@@ -232,8 +239,6 @@ public class JRR_AlquilerVehiculos {
         ES.escribirLn("1. Vehículos de una marca dada.");
         ES.escribirLn("2. Alquileres que tengan una marca dada.");
         ES.escribirLn("3. Alquileres que tengan una fecha menor que la indicada.");
-
-        ES.escribirLn("0. salir.");
 
     }
 
