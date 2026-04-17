@@ -237,7 +237,7 @@ public class JRR_AlquilerVehiculos {
         }
     }
 
-    /*
+    /**
     private static void borrarCliente(String dni) {
         boolean b = false;
 
@@ -304,7 +304,7 @@ public class JRR_AlquilerVehiculos {
 
     }
 
-    /*   private static void quitarHuecoC(String dni) {
+    /**  private static void quitarHuecoC(String dni) {
         boolean b = false;
         for (Alquiler a : alquileres) {
             if (a.getCliente().getDni().equals(dni)) {
@@ -540,7 +540,7 @@ public class JRR_AlquilerVehiculos {
         }
     }
 
-    /*  public static void guardarAlquilerEnFichero(Alquiler[] a) {
+    /**  public static void guardarAlquilerEnFichero(Alquiler[] a) {
         try {
             try (FileOutputStream fichero = new FileOutputStream("Alquileres_JRR.dat"); ObjectOutputStream salida = new ObjectOutputStream(fichero)) {
                 salida.writeObject(a);
@@ -720,14 +720,14 @@ public class JRR_AlquilerVehiculos {
         try {
             while (i < linea.length) {
                 unCliente = linea[i].split("#");
-                String[] dni = unCliente[0].split("#");
-                String[] nombre = unCliente[1].split("#");
-                String[] direccion = unCliente[2].split("#");
-                String[] localidad = unCliente[3].split("#");
-                String[] codPostal = unCliente[4].split("#");
-                String[] isbaja = unCliente[5].split("#");
-                boolean baja = Boolean.parseBoolean(isbaja[i]);
-                c = new Cliente(dni[i], nombre[i], direccion[i], localidad[i], codPostal[i], baja);
+                String dni = unCliente[0];
+                String nombre = unCliente[1];
+                String direccion = unCliente[2];
+                String localidad = unCliente[3];
+                String codPostal = unCliente[4];
+                String isbaja = unCliente[5];
+                boolean baja = Boolean.parseBoolean(isbaja);
+                c = new Cliente(dni, nombre, direccion, localidad, codPostal, baja);
                 clientes.add(c);
                 i++;
                 nClientes++;
@@ -858,7 +858,7 @@ public class JRR_AlquilerVehiculos {
         return true;
     }
 
-   /* public static LocalDateTime leerfecha(String linea) {
+   /** public static LocalDateTime leerfecha(String linea) {
         Scanner date = new Scanner(linea).useDelimiter("-").useDelimiter(":").useDelimiter(".");
         int anio = date.nextInt();
         int mes = date.nextInt();
