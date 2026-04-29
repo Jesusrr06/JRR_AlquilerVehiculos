@@ -723,11 +723,11 @@ public class JRR_AlquilerVehiculos {
             while (i < linea.length) {
                 unAlquiler = linea[i].split("#");
 
-                String[] matricula = unAlquiler[0].split("#");
-                String[] dni = unAlquiler[1].split("#");
+                String matricula = unAlquiler[0];
+                String dni = unAlquiler[1];
                 String[] date = unAlquiler[2].split("-");
-                v = getVehiculos(matricula[i]);
-                c = getClientes(dni[i]);
+                v = getVehiculos(matricula);
+                c = getClientes(dni);
                 a = new Alquiler(c, v);
                 int year = Integer.parseInt(date[0]);
                 int month = Integer.parseInt(date[1]);
